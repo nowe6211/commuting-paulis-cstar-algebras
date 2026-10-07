@@ -1,0 +1,105 @@
+\definecolor{central}{RGB}{230,230,230}
+\definecolor{rightc}{RGB}{66,133,244}
+\definecolor{leftc}{RGB}{219,68,55}
+\definecolor{topc}{RGB}{15,157,88}
+\definecolor{bottomc}{RGB}{244,180,0}
+\definecolor{lambdac}{RGB}{120,81,169}
+
+\begin{tikzpicture}[font=\small, line cap=round, line join=round]
+
+% ==================== Left panel ====================
+\begin{scope}[shift={(-6.0,0)}]
+  \node[font=\bfseries] at (0,4.25) {(a) The complement of an $\ell_\infty$ ball};
+
+  % background half-spaces
+  \fill[rightc!12]   (1.35,-3.6) rectangle (4.2,3.6);
+  \fill[leftc!12]    (-4.2,-3.6) rectangle (-1.35,3.6);
+  \fill[topc!12]     (-1.35,1.35) rectangle (1.35,3.6);
+  \fill[bottomc!14]  (-1.35,-3.6) rectangle (1.35,-1.35);
+
+  % axes
+  \draw[-{Latex[length=2.2mm]},gray!65] (-4.1,0)--(4.15,0) node[below right] {$x_1$};
+  \draw[-{Latex[length=2.2mm]},gray!65] (0,-3.5)--(0,3.55) node[above left] {$x_2$};
+
+  % central l_infinity ball
+  \filldraw[fill=central,draw=black,very thick] (-1.35,-1.35) rectangle (1.35,1.35);
+  \node[align=center] at (0,0) {$B(0,r)$\\$\|x\|_\infty\le r$};
+
+  % guide lines
+  \draw[dashed,gray] (-1.35,-3.5)--(-1.35,3.5);
+  \draw[dashed,gray] (1.35,-3.5)--(1.35,3.5);
+  \draw[dashed,gray] (-4.1,-1.35)--(4.1,-1.35);
+  \draw[dashed,gray] (-4.1,1.35)--(4.1,1.35);
+
+  % labels
+  \node[text=rightc!80!black,fill=white,inner sep=1.5pt] at (2.75,0.65) {$H_1^+=\{x_1>r\}$};
+  \node[text=leftc!80!black,fill=white,inner sep=1.5pt]  at (-2.75,0.65) {$H_1^-=\{x_1<-r\}$};
+  \node[text=topc!75!black,fill=white,inner sep=1.5pt]   at (0,2.65) {$H_2^+=\{x_2>r\}$};
+  \node[text=bottomc!75!black,fill=white,inner sep=1.5pt]at (0,-2.65) {$H_2^-=\{x_2<-r\}$};
+
+  \node[align=center,font=\footnotesize] at (0,-4.15)
+  {$B(0,r)^c=H_1^+\cup H_1^-\cup H_2^+\cup H_2^-$};
+\end{scope}
+
+% ==================== Right panel ====================
+\begin{scope}[shift={(5.9,-0.2)}]
+  \node[font=\bfseries] at (0,4.85) {(b) A region $\Lambda\subset B(0,r)^c$ and its cover};
+
+  % guide lines
+  \draw[dashed,gray!70] (-1.15,-5.2)--(-1.15,4.5);
+  \draw[dashed,gray!70] (1.15,-5.2)--(1.15,4.5);
+  \draw[dashed,gray!70] (-5.2,-1.15)--(5.0,-1.15);
+  \draw[dashed,gray!70] (-5.2,1.15)--(5.0,1.15);
+
+  % larger covering l_infinity balls (squares)
+  \filldraw[fill=leftc!13,draw=leftc,very thick]
+    (-4.95,-2.75) rectangle (-1.20,2.75);
+  \filldraw[fill=rightc!13,draw=rightc,very thick]
+    (1.20,-2.65) rectangle (4.95,2.65);
+  \filldraw[fill=topc!13,draw=topc,very thick]
+    (-2.80,1.20) rectangle (2.80,4.65);
+  \filldraw[fill=bottomc!18,draw=bottomc!85!black,very thick]
+    (-2.80,-4.85) rectangle (2.80,-1.20);
+
+  % Lambda: slightly "potatoey" rounded region
+  \begin{scope}[fill=lambdac!35, draw=lambdac!80!black, thick]
+    \filldraw[smooth cycle, tension=0.92]
+      plot coordinates {
+        (0.00,3.25)
+        (-1.25,3.00)
+        (-2.45,2.15)
+        (-3.15,0.95)
+        (-3.25,-0.55)
+        (-2.85,-1.75)
+        (-1.95,-2.55)
+        (-0.60,-3.05)
+        (0.90,-2.85)
+        (2.05,-2.25)
+        (2.85,-1.05)
+        (3.05,0.30)
+        (2.80,1.65)
+        (1.95,2.65)
+        (0.85,3.15)
+      };
+  \end{scope}
+
+  % central excluded square (no word "excluded")
+  \filldraw[fill=central,draw=black,very thick] (-1.15,-1.15) rectangle (1.15,1.15);
+  \node at (0,0) {$B(0,r)$};
+
+  % square labels
+  \node[text=leftc!80!black,fill=white,inner sep=1.5pt]   at (-3.45,2.25) {$B_1^-$};
+  \node[text=rightc!80!black,fill=white,inner sep=1.5pt]  at (3.45,2.20) {$B_1^+$};
+  \node[text=topc!75!black,fill=white,inner sep=1.5pt]    at (2.05,4.10) {$B_2^+$};
+  \node[text=bottomc!75!black,fill=white,inner sep=1.5pt] at (2.05,-4.20) {$B_2^-$};
+
+  % Lambda label inside the purple region
+  \node[font=\Large] at (2,-0.35) {$\Lambda$};
+
+  % bottom note
+\end{scope}
+
+% separator
+\draw[gray!35] (0,-5.65)--(0,5.25);
+
+\end{tikzpicture}
