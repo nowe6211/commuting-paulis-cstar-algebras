@@ -1,12 +1,14 @@
-\documentclass[11pt]{article}
-
-\usepackage[margin=1in]{geometry}
+% !TeX root = main.tex
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage{graphicx}
 \usepackage{tikz}
 \usepackage{tikz-cd}
 \usetikzlibrary{calc,positioning,arrows.meta}
+\usepackage[all]{xy}
+\usepackage{mathrsfs}
 \usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
+\usepackage{xcolor}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -17,3 +19,28 @@
 \newtheorem{example}[theorem]{Example}
 \theoremstyle{remark}
 \newtheorem{remark}[theorem]{Remark}
+
+\newtheorem{lem}[theorem]{Lemma}
+\newtheorem{prop}[theorem]{Proposition}
+\newtheorem{cor}[theorem]{Corollary}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{rem}[theorem]{Remark}
+
+% Environments and packages used by the imported personal notes.
+\usepackage{comment}
+\usepackage{placeins}
+\newtheorem{thm}[theorem]{Theorem}
+\theoremstyle{remark}
+\newtheorem{rmk}[theorem]{Remark}
+
+% authblk metadata, rendered in amsart's author and first-page footnote areas.
+\usepackage[noblocks]{authblk}
+\renewcommand{\Authfont}{\normalfont\footnotesize\scshape}
+\renewcommand{\Affilfont}{\normalfont\footnotesize}
+\makeatletter
+\let\maketitle\AB@maketitle
+\def\authors{\AB@authlist}
+\def\@setauthors{%
+  \begin{center}\AB@authlist\end{center}}
+\thanks{\hspace*{-\parindent}\AB@affillist}
+\makeatother

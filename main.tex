@@ -1,41 +1,1395 @@
+\documentclass[11pt]{amsart}
 \input{preamble}
 \input{macros}
 
-\title{Working Title}
-\author{Noah Welikson}
+\title{A C* algebra selection criterion for Pauli Codes}
+\author[ ]{Noah Welikson}
+\author[1,2]{Michael Hermele}
+\author[3]{Agn\`es Beaudry}
+\author[4,5]{Daniel Spiegel}
+\affil[1]{Department of Physics, University of Colorado Boulder.}
+\affil[2]{Center for Theory of Quantum Matter, University of Colorado Boulder.}
+\affil[3]{Department of Mathematics, University of Colorado Boulder.}
+\affil[4]{Department of Mathematics, University of California, Davis.}
+\affil[5]{Center for Quantum Mathematics and Physics, University of California, Davis.}
+\makeatletter
+\g@addto@macro\AB@authlist{ + ???}
+\def\shortauthors{Welikson, Hermele, Beaudry, Spiegel + ???}
+\makeatother
 \date{}
 
 \begin{document}
-\maketitle
-
 \begin{abstract}
-Abstract to be written.
+    We provide a selection criterion for localized states on the quasi-local algebra of a lattice-spin system based on local indistinguishability from the ground state. We show that for translation-invariant Lagrangian Pauli codes, every state satisfying the selection criterion is unitarily equivalent to a state uniquely defined by its expectation value on stabilizers. This shows that the commutative algebra formulation of Pauli codes captures all of the essential data of their C*-algebraic descriptions. We prove in 2D that our selection criterion is equivalent to the cone selection criterion studied by Naaijkens \cite{naaijkens_2011,naaijkens_2013}, and that our selection criterion can be extended to higher dimensions where the cone criterion fails, in particular for fracton models.
 \end{abstract}
+\maketitle
 
 \tableofcontents
 
 \section{Introduction}
 \subsection{Motivation and main results}
-\emph{To be written.}
+The study of translation invariant Pauli Codes in the thermodynamic limit has seen rich progress using the framework of commutative and homological algebra begininning with Haah \cite{haah_2013} who gave a general treatment of Pauli Codes as maps between free modules over the ring $\mathbb{Z}_n[\mathbb{Z}^D]$, and more recently by Yang and Ruba \cite{ruba_yang_2024} who characterized Pauli codes by a symplectic module $P$ and Lagrangian submodule $L\subset P$. At the same time, these Pauli codes have been treated on more concrete grounds via C*-algebras. Given the progress in both approaches one might wonder if the commutative algebra formulation of a Pauli code captures all of the essential data of the quantum-mechanics of the system, in particular if we can understand all the selection sectors of pointlike excitations above the ground state purely from the fusion module of a Pauli code. A similar question was studied by Naaijkens \cite{naaijkens_2011,naaijkens_2013,naaijkens_2017}, who described "cone-localizable" charges in 2d systems, excitations that are completeley indinstinguishable from the ground when restricting to operators outside of a cone, an approach adapted from the Doplicher-Haag-Roberts (DHR) program in algebraic quantum field theory \cite{doplicher_haag_roberts_1971,doplicher_haag_roberts_1974} Naaijkens found a bound on the number of selection sectors of such charges and showed the the $\mathbb Z_2$-toric code~\cite{kitaev_2003} saturates this bound. While this line has both physical and mathematical merits, it is limited by requiring certain assumptions for the GNS representation of the ground state and restricting to systems where excitations live at the end of string-like operators. String operators suffice to describe topological charges in two-dimensional translation-invariant topological stabilizer codes on qubits~\cite{bombin_2014}, but this description need not extend to three dimensions, where stabilizer codes without string logical operators exist~\cite{haah_2011}.   
+\par This paper aims to provide an alternate approach on the question of determining all the superselection sectors of a theory in the case of translation-invariant Pauli codes, where the afformentioned commutative algebra tools are available. 
+To do so we introduce a new selection criterion, whereby we consider C*-states that are \textit{locally}, approximately indinstinguishable from the ground state. We show any such state is unitarily equivalent to a state defined uniquely by its value on stabilizers, and therefore characterized by the module of local excitations on the commutative algebra side. This can be seen as generalization of the result found in \cite{cha_naaijkens_nachtergaele_2018} . In the second half of the paper we show this new criterion agrees with cone criterion of Naaijkens in 2d, and how the cone-criterion breaks down in higher dimensions, specifically in fracton-models, whereas our criterion remains consistent. 
+\section{Pauli-Codes}
 
-\subsection{Organization of the paper}
-\emph{To be written.}
+\subsection{Introduction}
+Stabilizer codes are a certain class of lattice spin systems. Let $d$ be the spatial dimension. We work with the infinite lattice $\Z^d$ where on each site $\lambda \in \Z^d$, which may be taken to be the vertices or the edges, we have placed a vector space of the form
+\[\cH = \C^n \otimes \ldots \otimes \C^n\]
+and a Hamiltonian expressed as a formal sum
+\[ H =- \sum_b H_b.\]
+Some canonical examples include the 1D Ising model
+\[ H_{\mathrm{IM}} =- \sum_{v} Z_vZ_{v+1},\]
+the 2D toric code
+\[ H_{\mathrm{TC}} =- \sum_{v} A_v -\sum_p B_p, \]
+or
+ the 3D X-cube model
+\[ H_{\mathrm{XC}} =- \sum_{c} A_c -\sum_v (B_v^x +B_v^y+B_v^z). \]
+Each of these models share the some key properties:
+\begin{itemize}
+\item The Hamiltonian terms are product of \emph{Pauli matrices} and the terms commute with one another.
+\item They are \emph{locally finite}, that is,  the number of terms acting non-identically on any fixed lattice site is globally bounded.
+\item They have \emph{finite range}, that is, the diameter of the support of each Hamiltonian term is globally bounded.
+\item They are \emph{translation invariant} with respect to some coarsening of the translation action of the lattice.
+\end{itemize}
+Translation invariant stabilizer codes are lattice spin systems with these properties. We will give a precise definition later on. These have been studied extensively throughout condensed matter theory. The subject of these notes is the algebraic formalism for studying stabilizer codes developed by Haah \cite{HaahCommuting} and extended by Ruba--Yang \cite{RYHomological}. In these notes, we follow this treatment. This formalism has led to classification results (e.g. \cite{HaahCommuting, HaahClassification, HFH, RYWitt}) and a growing understanding of the landscape for ground states, excitations and statistics for stabilizer codes.
 
-\section{Setting and notation}
-\emph{To be written.}
 
-\section{Main results}
-\emph{To be written.}
 
-\section{Proofs}
-\emph{To be written.}
+
+
+\subsection{Pauli Operators and Forms}
+
+A distinguished class of lattice models is provided by \emph{Pauli stabilizer codes}. These are exactly solvable models whose Hamiltonian terms are local Pauli operators, namely products of clock operators, denoted by $Z$'s, and shift operators, denoted by $X$'s. The Pauli group admits a convenient description in terms of symplectic spaces over $\mathbb Z_n$, originating in~\cite{calderbank1997quantum}; its translation-invariant version was introduced in~\cite{HaahCommuting}. We review the group of Pauli operators and its commutation structure, following the treatment of~\cite{RYWitt}.
+
+
+
+\subsubsection{The Pauli Group}
+Throughout, we fix a natural number $n$. Let
+\[\zeta := e^{\frac{2\pi i}{n}}  \in \rm\rmU(1).\]
+We let $\cH=\C[\Z_n]$ be the group algebra on $\Z_n$.
+We call the canonical basis $e_0,\ldots, e_{k},\ldots,  e_{n-1}$, treating the index $k$ as an element in $\Z_n$.  We call $\cH$ a \emph{qudit} and, if $n=2$, we call it a \emph{qubit}. (The name comes from using $d$ for the onsite dimension instead of $n$, but we will reserve $d$ for the spatial dimension.)
+
+The \emph{shift operator} $X$ is the operator on $\cH$ given by
+\[ X e_k= e_{k+1}\]
+and the \emph{clock operator} $Z$ is given by
+\[ Ze_k= \zeta^k e_k.\]
+They satisfy the relations
+\begin{align*}
+X^n &= Z^n =I, & ZX &= \zeta XZ .
+\end{align*}
+\begin{lem}\label{lem:paulisgen}
+The products $X^{a}Z^b$ for $a,b\in \Z_n$ form an orthonormal basis for $\mathfrak{B}(\cH)$ with respect to the inner product
+\[\langle A,B\rangle = \frac{1}{n}\tr(A^\dagger B).\]
+\end{lem}
+\begin{proof}
+Both $X$ and $Z$ are unitary matrices and so $(X^aZ^b)^\dagger = Z^{-b}X^{-a}$.
+Then
+\begin{align*}
+ \tr(Z^{-b}X^{-a}X^cZ^d) &=  \sum_{k=0}^{n-1} \langle e_k , Z^{-b} X^{c-a}Z^d e_k\rangle \\
+&=  \sum_{k=0}^{n-1} \zeta^{dk}  \langle e_k ,  Z^{-b}e_{k+c-a}\rangle \\
+&=  \sum_{k=0}^{n-1} \zeta^{k(d-b)-b(c-a)} \langle e_k ,  e_{k+c-a}\rangle \\
+\end{align*}
+We see that if $a-c\neq 0$, then all the terms are zero so the elements are orthogonal. Assuming $a=c$, then
+if $b-d\neq 0$, the sum over $k$ of the roots of unity $e^{\frac{2\pi i( k(d-b))}{n}}$ is zero, and so again, the terms are orthogonal.
+\end{proof}
+
+\begin{example}
+If $n=2$ in the basis $e_0,e_1$, then $X$ and $Z$ are Pauli matrices
+\[X = \begin{pmatrix}  0  & 1 \\ 1 & 0 \end{pmatrix}  \quad \text{and} \quad Z= \begin{pmatrix} 1 & 0 \\ 0 & -1 \end{pmatrix} \]
+which explains the notation.
+If $n=3$,
+\[X = \begin{pmatrix}  0  &  0 & 1 \\ 1 & 0 & 0 \\ 0 & 1 & 0  \end{pmatrix}  \quad \text{and} \quad Z= \begin{pmatrix}  1 & 0  & 0 \\ 0 & e^{\frac{2\pi i}{3}} & 0 \\ 0 & 0 & e^{-\frac{2 \pi i}{3}}   \end{pmatrix} \]
+\end{example}
+
+\begin{defn}
+The $1$-qudit Paul group $\cP= \cP(1)$ is the subgroup of $\rmU(\cH)$ generated by $X$, $Z$ and $z I$ where $I$ is the identity and $z\in \rm\rmU(1)$. The elements $z=zI$ are called \emph{phases}. Operators of the form $zX^aZ^b$ are called \emph{Pauli operators}.
+\end{defn}
+\begin{lem}
+There is a central extension
+\[ 1 \to \rmU(1) \to \cP \to C_n \times C_n\to 1\]
+where $C_n$ is the cyclic group of order $n$.
+\end{lem}
+\begin{proof}
+Consider $\cP/\rmU(1) I$. Since $X$ and $Z$ commute up to a phase, this is an abelian group and it is clear that it is isomorphic to $C_n \times C_n$ with generators the residue class of $X$ and $Z$ respectively.
+\end{proof}
+
+
+\begin{rem}
+We will denote the target of the central extension using additive notation
+\[C_n \times C_n \cong \Z_n\oplus \Z_n\]
+sending the residue class of $X^aZ^b$ to $(a \co  b)$. We use the semi-colon notation to clearly separate the $X$ and $Z$ coordinates. We will denote the central extension by
+\[ 1 \to \rmU(1) \to \cP \to \Z_n\oplus \Z_n \to 0\]
+where the zero on the right emphasizes the additive notation.
+\end{rem}
+\begin{defn}
+We call
+\[ P = P(1) := \cP(1)/\rmU(1) \cong  \Z_n\oplus \Z_n\]
+the \emph{projective  (1-qudit) Pauli group}.
+\end{defn}
+
+
+Our next goal is to define the $m$ qudit Pauli group. These will be operators on $m$-qudits
+\[ \cH^{\otimes m} = \bigotimes_{j=1}^m \cH_j\]
+where $\cH_j = \cH$. For each $j$, we can tensor the shift operator $X$ acting on the $j$th tensor factor with identities to get a shift operator $X_j$. The clock operator $Z_j$ is defined similarly. Note that
+\[ [X_j,X_{j'}] = [X_j,Z_{j'}] = [Z_j,Z_{j'}] =0\]
+if $j\neq j'$. Again, the operators
+\[ X^a Z^b:=\prod_{j=1}^m X_j^{a_j}Z_j^{b_j}\]
+for $a=(a_1,\ldots, a_m)$ and $b=(b_1,\ldots,b_m)$ with $a_j,b_j \in \Z_n$ form a basis form a basis of unitary operators for $\mathfrak{B}(\cH^{\otimes m})$.
+\begin{defn}
+The $m$-qudit Pauli group $\cP= \cP(m)$ is the subgroup of $\rmU(\cH^{\otimes m})$ generated by all $X_j$, $Z_j$ and the phases  $z I$ for $z \in \rmU(1)$. We again call elements of the Pauli group \emph{Pauli operators}.
+\end{defn}
+We again have a central extensions
+\[ 1 \to \rmU(1) \to \cP(m) \to \Z_n^m\oplus \Z_n^m \to 0\]
+and we call $\Z_n^m\oplus \Z_n^m $ the \emph{($m$-qudit) projective Pauli group}.
+
+
+Our last upgrade to the Pauli group will be to put it on an infinite lattice.  On each site $\lambda\in \Z^d$, we put the algebra of operators on $m$-qudits
+\[\cH =\underbrace{ \C^n \otimes \cdots \otimes \C^n}_{m}.\]
+Let
+\[\cA_\lambda  = \mathfrak{B}(\cH).\]
+For any finite subset $\Lambda \subset \Z^d$, we let
+\[\cA_\Lambda = \bigotimes_{\lambda\in \Lambda} \cA_\lambda.\]
+If $\Lambda\subset \Lambda'$, then we have an injection $\cA_\Lambda \subset \cA_{\Lambda'}$ obtained by sending $A$ to $A\otimes I_{\Lambda\backslash \Lambda'}$ where $I$ is the identity on $\cA_{\Lambda\backslash \Lambda'}$. Let
+\[\cA_\loc = \bigcup_{\Lambda} \cA_{\Lambda}\]
+as $\Lambda$ runs over the finite subsets of $\Z^d$.   We let $I$ be the identity on $\cA_\loc$, which is the image of the identity $I_\lambda \in \cA_\lambda$ for any $\lambda$. For $z\in \rm\rmU(1)$, we let $zI $ be the image of  $zI_\lambda$ for any $\lambda$, which is independent of the choice of $\lambda$. The \emph{support} of $A \in \cA_\loc$ is the intersection of all the subsets $\Lambda$ such that $A \in \cA_\Lambda$.
+
+\begin{defn}\label{defn:qlalgebra}
+The algebra $\cA_\loc$ is called the \emph{algebra of local operators}. The completion of $\cA_\loc$ with respect to the norm induced by the operator norms of each $\mathfrak{B}(\cH)$ is a $C^*$-algebra $\cA$ called the \emph{quasi-local algebra}.
+\end{defn}
+
+
+We define the Pauli group to be a subgroup of $\rmU(\cA_\loc)$ as follows.
+For each $\lambda \in \Z^d$, we have operators $X_{\lambda,j}$ and $Z_{\lambda,j}$ in $ \cA_\lambda$. Note that these are again unitary elements in $\cA$ (where $U$ is unitary if $U^*U=UU^*=I$), and so elements of $\rmU(\cA)$.
+\begin{defn}
+The $m$-qudit \emph{Pauli group} on $\Z^d$, denote $\cP = \cP(m,d)$, is the subgroup of $\rmU(\cA)$ generated by  the \emph{Pauli operators}, that is, those elements
+\[ zX^aZ^b:= z I  \prod_{\lambda \in \Z^d} \prod_{j =1}^m X_{\lambda,j}^{a_{\lambda,j}} Z_{\lambda,j}^{b_{\lambda,j}}  \]
+with $z\in \rmU(1) $ and $\Z^d \times \{1,\ldots, m\}$-indexed sequences $a = (a_{\lambda,j})$ and $b=(b_{\lambda,j})$ which are zero for all but finitely many $\lambda \in \Z^d$. The \emph{projective Pauli group $P = P(m,d)$} is the quotient of $\cP$ by $\rmU(1)I$.
+\end{defn}
+
+Again, there is a central extension
+\[1 \to \rmU(1) \to \cP \to P\cong \bigoplus_{\lambda \in \Z^d} \Z_n^{2m}   \to 0
+\]
+where the map sends $zX^{a}Z^{b} $
+\[  (a  \co b ) =\sum_\lambda (a_{\lambda,1}, \ldots, a_{\lambda,m} \co  b_{\lambda,1}, \ldots, b_{\lambda,m} ). \]
+
+In order to package the information of $P$ more efficiently, we remember the translation symmetries of the lattice. We let $\Gamma \cong \Z^d$ and let it act on $\Z^d$ in the obvious way: an element $\mu \in \Gamma$ acts on $\lambda$ by translation $\lambda \mapsto \lambda+\mu$.
+
+The group ring $\Z_n[\Gamma]$ is isomorphic to a Laurent polynomial ring
+\[R = \Z_n[x_1^\pm,\ldots, x_d^\pm]\]
+where $\mu= (\mu_1,\ldots, \mu_d) \in \Gamma$ corresponds to the monomial
+\[x^\mu = x_1^{\mu_1} \cdots x_d^{\mu_d} \in R.\]
+The ring $R$ has an involution induced by the inversion on $\Gamma$. That is, it is the unique $\Z_n$-linear map which sends $x^{\mu}$ to $x^{-\mu}$. For $r =r(x) \in R$, we write $\overline{r}$ to denote the image of $r$ under the involution. For an element $r=r(x) \in R$, we let the constant term be denoted by $r_0$.
+
+There is an action of $\Gamma$ on $\cP$ induced by
+\[ \mu \cdot \left(z   \prod_{\lambda \in \Z^d} \prod_{j =1}^m X_{\lambda,j}^{a_{\lambda,j}}   Z_{\lambda,j}^{b_{\lambda,j}} \right)  = z   \prod_{\lambda \in \Z^d} \prod_{j =1}^m X_{\lambda,j}^{a_{\lambda-\mu,j}}  Z_{\lambda,j}^{b_{\lambda-\mu,j}}  .\]
+This makes $P$ into an $R$-module, and in fact,
+\[P \cong R^{m}\oplus R^m\]
+where the isomorphism is described as follows. Let
+\begin{align*}
+a_j(x) &= \sum_{\lambda} a_{\lambda,j} x^\lambda  \\
+b_j(x) &= \sum_{\lambda} b_{\lambda,j} x^\lambda .
+\end{align*}
+Let
+\[ (a(x) \co b(x)) := \left( a_1(x), \cdots, a_m(x)  \co  b_1(x), \cdots, b_m(x) \right) \in R^{2m}. \]
+Then the identification is given by
+\begin{align*}
+(a  \co b ) \mapsto  (a(x) \co b(x))
+\end{align*}
+We call this the \emph{Pauli module}. The translation action corresponds to the $R$-module structure
+\[x^\mu(a(x) \co b(x)) = (x^\mu a(x) \co x^\mu b(x)).  \]
+
+
+
+
+\begin{example}
+The element
+\[  (a(x) \co b(x)) = (3 x_1^2+11 x_1^3x_2^{-1}, -x_2x_3^6 \co 2x_1 +10x_1x_2x_3, -4x_2^{-5}x_3^7 ) \in P(2,3)\]
+of a $m=2$ qudit Pauli module in dimension $d=3$ corresponds to
+\[  z X_{(2,0,0),1}^3 X_{(3,-1,0),1}^{11}  X_{(0,1,6),2}^{-1} Z_{(1,0,0),1}^2 Z_{(1,1,1),1}^{10} Z_{(0,-5,7),2}^{-4}  \]
+for any $z\in \rm\rmU(1)$.
+\end{example}
+
+We will need to keep track of the spatial region on which an element of $P$ acts and for this we make the following definition.
+\begin{defn}
+For any element $r\in R$, write $r(x) = \sum_{\lambda}r_{\lambda}x^\lambda$ for $r_\lambda\in \Z_n$ and define the \emph{support of $r$} as
+\[ \supp(r)= \{\lambda\in\Z^d : r_{\lambda}\neq 0\}.\]
+For an element $p = (a_1(x),\ldots, a_m(x) \co b_1(x),\ldots, b_m(x))$, we let
+\[\supp(p) = \bigcup_{i=1}^m \supp(a_i(x))\cup  \supp(b_i(x)).\]
+and call this the \emph{support} of $p$.
+\end{defn}
+
+\subsubsection{The canonical form}
+
+Passing to the projective Pauli group forgets the phase factors $z$, which was the essential information relating to the non-commutativity of the Pauli operators. However, we keep this information encoded in a bilinear form as described in this section. Again, we start with describing this in the easier case of $\cP(1)$.
+
+
+An element $(a  \co  b) \in \Z_n^2$ of the projective Pauli group represents the coset of operators $z X^a Z^b \in \cP$. For $(c  \co  d)\in \Z_n^2$ representing $y X^cZ^d$ we have
+\[ \zeta^{ad-bc} (z X^a Z^b ) (y X^cZ^d) = (y X^cZ^d) (z X^a Z^b )\]
+independent of the choice of phase $z$, $y$.
+The phase $\zeta^{ad-bc}$ can be recorded by the bilinear form
+\[\omega \colon P(1)  \times P(1)  \to \Z_n\]
+given by the \emph{standard symplectic form}
+\[ \omega\left( (a  \co  b), (c  \co  d) \right) = \begin{pmatrix} a \\ b \end{pmatrix}^T \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} \begin{pmatrix} c \\ d \end{pmatrix} = ad-bc.\]
+ Note that $\omega$ is an alternating bilinear form.  We can extend this to $m$ qudits by summing the values of $\omega$ over each qudits,
+ \[\omega\left( (a_1,\ldots, a_m  \co  b_1,\ldots,b_m) ,  (c_1,\ldots, c_m  \co  d_1,\ldots,d_m) \right) = \sum_{j=1}^m a_{j}d_{j} - b_{j}c_{j}  .\]
+ More generally, for $P = P(m,d)$, we have a form
+ \[\omega \colon P \times P \to \Z_n\]
+which for $p=(a(x) \co b(x))$ and $q=(c(x) \co d(x))$, is given by
+ \[\omega(p,q) =\sum_\lambda \sum_{j=1}^m a_{\lambda,j}d_{\lambda,j} - b_{\lambda,j}c_{\lambda,j}  .\]
+
+We let $\fh \colon P \to \cP$ be the function which sends $p=(a(x) \co b(x))$ to
+\[\fh_p=\fh(p) = X^{a}Z^{b}= \prod_{\lambda \in \mathbb{Z}^d}\prod_{j=1}^m X_{\lambda,j}^{a_{\lambda, j}} Z_{\lambda,j}^{b_{\lambda, j}} .\]
+For $p,q \in P$, we thus have
+We write $\chi(p,q)=\zeta^{\omega(p,q)}\in\rmU(1)$ for the corresponding commutation phase. Thus
+\[ \chi(p,q)\fh_p\fh_q=\fh_q\fh_p.\]
+In particular, $\fh_p,\fh_q \in \cP$ commute if and only if $\omega(p,q) =0$.
+
+
+
+The expression for $\omega$ does not take advantage of the structure afforded to us by the action of the translation group, and there is a succinct way to think about this form if we take the module structure of $P$ into account. We can lift $\Omega$ to an $R$-sesquilinear anti-symmetric bilinear form
+\[ \Omega \colon P \times P \to R \]
+using the following formula. For $p = (a(x) \co b(x))$ and $q=   (c(x) \co d(x))$, we let
+\begin{align*}\Omega( p,q) &= \sum_{j=1}^m \overline{a}_j(x) d_j(x) - \overline{b}_j(x) c_j(x) \\
+&=   \begin{pmatrix} {a}(x) \\ {b}(x) \end{pmatrix}^\dagger \begin{pmatrix} 0 & I_m \\ -I_m & 0 \end{pmatrix} \begin{pmatrix} c(x) \\ d(x) \end{pmatrix}
+\end{align*}
+where $A^\dagger$ is the transpose of $A$ followed by an application of the involution to each entry.
+The form is \emph{sesquilinear} in the sense that
+\begin{align*}
+\Omega(p+p',q) &= \Omega(p,q)+\Omega(p',q) & \Omega(p,q+q') &= \Omega(p,q)+\Omega(p,q')
+\end{align*}
+and for $r \in R$,
+\[\Omega(p,rq) = \Omega(\overline{r}p,q) = r\Omega(p,q).\]
+It is also \emph{anti-symmetric}
+\[ \Omega(p,q) = -\overline{\Omega(q,p)}.\]
+
+This extends $\omega$ in the following sense:
+\begin{lem}
+For $p = (a(x) \co b(x))$ and $q=   (c(x) \co d(x))$,
+\[\Omega( p,q)_0 =  \omega(p,q).\]
+\end{lem}
+\begin{proof}
+The constant term of $\Omega( p,q)_0$ is the sum over $j$ of the constant terms of $\overline{a}_j(x) d_j(x)$ minus that of the constant terms of $- \overline{b}_j(x) c_j(x)$.
+\begin{align*}
+ (\overline{a}_j(x) d_j(x))_0
+ &= \left(\sum_{\lambda} a_{\lambda,j}x^{-\lambda} \right)\left(\sum_{\lambda} d_{\lambda,j}x^{\lambda} \right)_0  \\
+ &= \sum_{\lambda} a_{\lambda,j}d_{\lambda,j}.
+ \end{align*}
+ This proves the claim.
+\end{proof}
+
+
+
+
+
+\subsection{Stabilizer Codes}
+
+Roughly, stabilizer codes are a special class of quantum spin systems where the Hamiltonian is given by a collection of commuting Pauli operators $\{H_b\}$ for $\cB \subset \cP$, so that
+\[H =- \sum_{b} H_b+H_b^\dagger.\]
+(Note that if $n=2$ we don't need to include the Hermitian conjugate term).
+States that are invariant under all of the $H_b$,
+\[ H_b \xi = \xi \]
+form the \emph{(frustration free) ground state}. For this reason, the terms $H_b$ are called \emph{stabilizers}. This admits a very nice mathematical model using the setup we gave above. We will be more precise a little later on.
+
+Now, recall that elements of $\cP$ commute if and only if they project to elements $p,q$ of $P$ such that $\omega(p,q)=0$.  Therefore, to build a stabilizer code, we need to consider collections of elements on which $\omega$ vanishes. Once we've chosen such a group, we will make precise what we mean by \emph{states} associated the Hamiltonian they capture.
+
+\subsubsection{Parent Hamiltonians}
+
+
+Recall that we defined a set map $\fh \colon P \to \cP$ by
+\[\fh_p = \fh(p) = X^{a_\lambda}Z^{b_\lambda}, \]
+for $p=(a(x) \co b(x))$, that is, the function which picks out the Pauli-operators with no phase attached.
+A subgroup $L$ of $P$ is \emph{isotropic} if $L\subset L^\perp$ for
+\[L^\perp = \{ p \in P \mid \omega(p,l)=0 \ \text{for all} \ l\in L\}.\]
+We would like to claim that an isotropic subgroup $L$ of $P$ is the homomorphic image of a subgroup $\cL$ consisting of commuting Pauli-operators $\fh_l$ for $l\in L$, but this may not be the case. However, this hold up to a phase and allow us to assign a (non-unique) Hamiltonians to an isotropic subgroups.
+
+Consider the central extension
+\[1 \to \rmU(1) \to \cP \xrightarrow{\pi} P \to 1\]
+where $P = P(m,d)$ is the $m$ qudit projective Pauli group in dimension $d$.  We refer the reader to \cref{sec:central} for background on central extensions.
+Using that
+\[ \zeta^{-bc} X^aZ^b X^c Z^d = X^{a+c}Z^{b+d}\]
+for $a,b,c,d\in \Z_n$,
+for $p = (a(x) \co b(x))$ and $q=(c(x) \co d(x))$, we deduce that
+\begin{align}\label{ex:fPauli}
+f(p,q) = \sum_\lambda \sum_{j} -b_{\lambda,j}c_{\lambda,j}
+\end{align}
+ is a 2-cocycle classifying the extension.
+Note that $f$ is indeed a bilinear form satisfying
+\[ \zeta^{f(p,q)}\fh_p\fh_q=\fh_{p+q}\]
+for $p,q\in P$ and as expected, the commutation form of the extension is given by
+\[\omega(p,q) = f(p,q)-f(q,p).\]
+
+As for $\omega$, the form $f$ can be expressed as the constant term of a $R$-valued form,
+\begin{align*}F( p,q) &= \sum_{j=1}^m - \overline{b}_j(x) c_j(x) \\
+&=   \begin{pmatrix} {a}(x) \\ {b}(x) \end{pmatrix}^\dagger \begin{pmatrix} 0 & 0 \\ -I_m & 0 \end{pmatrix} \begin{pmatrix} c(x) \\ d(x) \end{pmatrix}
+\end{align*}
+so that
+\[\Omega(p,q) = F(p,q)-\overline{F(q,p)}.\]
+
+
+The elements of an isotropic subgroup $L\subset P$ are called \emph{stabilizers}. Roughly, given a homomorphism $H \colon L \to \cP$ such that $\pi(H(l))=l$,
+we will construct a state $\xi$ such that
+\[ H_l \xi = \xi\]
+for all $l$, where here $H_l=H(l)$. The state $\xi$ is the ground state of a parent Hamiltonian obtained from the homomorphism $H$. This will all be made precise, but first we need  this homomorphism and this is the topic of the rest of this section.
+
+
+\begin{theorem}
+Let $L$ be an isotropic subgroup of $P$. Homomorphisms $H \colon L \to \cP$ such that $\pi|_L\circ H =\id_L$ are in one-to-one correspondence with quadratic forms $\phi \colon L \to \rmU(1)$ that trivialize $f|_L$ for $f$ as in \eqref{ex:fPauli}. In particular, such an $H$ always exists.
+\end{theorem}
+\begin{proof}
+This is a direct consequence of \cref{cor:Hquadratic} below.
+\end{proof}
+
+The values of $H$ give the phases associated to each Hamiltonian term $H_l$ so that
+\[ H_l =\phi(l)\fh_l.\]
+We let $\cL =H(L)$.
+
+
+
+
+
+\subsubsection{Stabilizer Codes}
+In this section, we give the definition of a stabilizer code.
+
+
+\begin{defn}
+We will say that $L\subset P$ is \emph{locally finite} if there exists a generating set $B\subset L$ with a uniform bound on the diameter of the supports $\supp(b)$ of the generators $b \in B$ and a bound, uniform in $\lambda \in \Z^d$, on the number of $b\in B$ which contain $\lambda $.  We call $B$ a \emph{set of local generators} for $L$.
+\end{defn}
+
+
+\begin{lem}
+Suppose that $L\subset P$ is a $R$-submodule. For any set of $R$-module generators $\{l_1,\ldots, l_k\}$, the set
+\[B(l_1,\ldots, l_k)= \{ x^\mu l_i \mid \mu \in \Z^d, 1 \leq i \leq k \}. \]
+is a set of local generators for $L$. Any translation invariant set of local generators is of this form.
+\end{lem}
+\begin{proof}
+Recall that since $R$ is Noetherian submodule of a finitely generated module is itself finitely generated. So, $L$ is finitely generated and we can choose generators $\{l_1,\ldots, l_k\}$. Then $B = B(l_1,\ldots, l_k)$ as above generates $L$ as an abelian group. Translating does not change the diameter of the support so
+\[\diam(\supp(b)) \leq \max \left(\diam(\supp(l_1)),\ldots,\diam(\supp(l_k))\right).\]
+ Furthermore, any fixed site $\lambda \in \Z^d$ is contained in the support of exactly
+ \begin{align} \label{eq:numberorbits}
+ \sum_{i} |\supp(l_i)|
+ \end{align}
+ elements of $B$. So $B$ is a local set of generators. Furthermore, for $B$ be any translation invariant local set of generators,  $B =B(l_1, \ldots, l_k)$ where $l_1, \ldots, l_k$ are representatives for the $\Z^d$-orbits of $B$, which we know is finite because of \eqref{eq:numberorbits}.
+\end{proof}
+
+
+
+\begin{defn}
+A \emph{projective stabilizer code} is an isotropic locally finite subgroup $L \subset P$. We say that $L$ is \emph{translation invariant} if it is an $R$-submodule of $P$.  A \emph{stabilizer code} is a choice of $L$ and a homomorphism
+\[ H \colon L \to \cP\]
+denoted by $l\mapsto H_l$ which splits the projection $\cP \to P$, giving choices of lifts $H_l$ for each $l\in L$.
+
+A \emph{parent Hamiltonian} is set of local generators $B$ for $L$ and we suggestively write
+\[ H= -\sum_b H_b+H_b^\dagger .\]
+We say that $(L,H,B)$ is \emph{projectively translation invariant} if both $L$ and $B$ are translation invariant. If $\cL = H(L)$ and $\cB=H(B)$ are translation invariant, then we call   $(L,H,B)$ \emph{translation invariant}.
+\end{defn}
+
+
+
+
+
+One way to specify a stabilizer code is to specify an $\cL \subset \cP$ which maps isomorphically onto its image $L$ in $P$. This is the case for many examples in the literature.
+
+For a translation invariant code, $L$ is an $R$-submodule of the finite free module $P$. Since $R$ is Noetherian, we can choose a finite $R$-generating set $B=\{b_1,\ldots,b_t\}$ for $L$. For such a code, we henceforth choose $B$ to be such a set and write
+\[
+\mathcal B=\{H(x^\mu b):\mu\in\Gamma,\ b\in B\}
+\]
+for the full set of elementary stabilizers. The local generating set in the preceding definition is then $\{x^\mu b:\mu\in\Gamma,\ b\in B\}$, rather than $B$ itself. The preceding translation-invariance conditions concern this full set and its lifts; we do not require the finite set $B$ itself to be invariant under translations. The elements of $B$ need not be $R$-linearly independent.
+
+
+\section{\texorpdfstring{$C^*$}{C*} algebras}
+
+In this section, we study the ground state and excited states of Pauli stabilizer codes.
+
+\subsection{Quasi-local algebra and states}
+We are working towards studying the grounds states and excitations of Pauli stabilizer codes. For this, we will use the framework of $C^*$-algebras, and we start by looking at the quasi-local algebra.
+Recall that we already introduced the local algebra $\cA_\loc$ in  \cref{defn:qlalgebra}. We start by giving it a different description here.
+
+Let $\C[\cP]$ be the complex group ring. The inclusion $\cP \to U(\cA_\loc)$ induces an isomorphism
+\[  \C[\cP]/([zI]-z[I]) \to \cA_\loc\]
+where the left-hand-side is the quotient of the complex group ring by the left module generated by $[zI]-z[I]$. The fact that this is an isomorphism follows from the fact that the collection $\fh_p \in U(\cA_\loc)$ for $p\in P$ form a basis for $\cA_\loc$ by \cref{lem:paulisgen}.
+
+Any element of $\cA_\loc$ can be written as
+\[ \sum_{p\in P} a_p\fh_p\]
+for $a_p \in \C$ non-zero for only a finite number of $p \in P$ in the projective Pauli group. Let
+\[\big\langle \sum_{p\in P} a_p\fh_p , \sum_{p\in P} b_p\fh_p\big\rangle = \sum_{p\in P} \bar{a}_pb_p.\]
+Let $\cH_\cP$ be the completion of vector space underlying $\cA_\loc$ respect to this inner product.
+Every element in $\cH_\cP$ has a unique representation as
+\begin{align}\label{eq:hpexp}
+\sum_{p \in P} a_p \fh_p
+\end{align}
+where $\sum_{p} |a_p|^2 <\infty$. Left multiplication by $a \in\cA_\loc$ is a bounded operator on $\cH_\cP$, so we have a faithful representation
+\[ \pi_P \colon \cA_\loc \to \mathfrak{B}(\cH_\cP).\]
+Recall that $\cA$ from  \cref{defn:qlalgebra}  is the completion of $\cA_\loc$ with respect to the norm induced by on its finite dimensional sub-$\ast$-algebra.
+
+
+
+
+
+
+Recall that a \emph{state} for $\cA$ is a positive linear functionals $\rho \colon \cA \to \C$ of norm one. That is,
+$\rho(A^*A)\geq 0$ for all $A\in \cA$ and $\rho(I)=1$.
+Given a state, we recall the GNS-construction for $\rho$. Let
+\[\cN_\rho =\{ A\in \cA \mid \rho(A^*A)=0 \}.\]
+Then $\cN_\rho$ is a left ideal and we can form the complex vector space $\cA/\cN_\rho$. The pairing
+\[ \langle [A], [B] \rangle =\rho(A^*B)\]
+is an inner product on the cosets. The completion with respect to this inner product is a Hilbert space which we denote by $\cH_\rho$. There is a natural representation
+\[\pi_\rho \colon \cA \to \mathfrak{B}(\cH_\rho)\]
+induced by
+\[\pi_\rho(A)[B] = [AB].\]
+The vectors $\xi_\rho = [I]$ is cyclic for this representation and the triple
+\[(\pi_\rho, \cH_\rho, \xi_\rho)\] is called the GNS representation. It has the property that
+\[ \rho(A)=\langle \xi_\rho, \pi_\rho(A)\xi_\rho\rangle \]
+for any $A\in \cA$. It is also unique of to unitary equivalence in the following sense. If $(\pi,\cH, \xi)$ is another representation satisfying the above requirements, then there is a unitary isomorphism $U \colon \cH_\rho \to \cH$ such that $U\xi_\rho=\xi$ and $\pi(A)=U\pi_\rho(A)U^*$ for all $A\in \cA$.
+
+\begin{example}
+Any positive linear functional of norm one  on $\cA_\loc$ extends uniquely to a state on $\cA$. For example,
+Let $T \colon \cA_\loc \to \rmU(1)$ given by $T(A) = a_0$, the coefficient of $\fh_0$ in the decomposition \eqref{eq:hpexp} extends to a state on $\cA$. This is the unique tracial state.
+\end{example}
+
+Going forward, we assume $L$ be an isotropic subgroup and $H \colon L \to \cP$ be a homomorphism and let $ \cL =H(\cL)$.
+Choose
+\[E \colon L \to  \rmU(1)\]
+a group homomorphism. Note that since $nL=0$, $E$ has image contained in the subgroup of $n$-th  roots of unity.
+Let $\overline{\cL}$ be the subgroup generated by $\cL$ and $\rmU(1)$ in $\cP$. Since $\cL \cap \rmU(1) = \{I\}$, we can extend $E$ to a homomorphism
+\[ E \colon \overline{\cL} \to \rmU(1)\]
+by letting $E(z H_l) = zE(l)$. Define $\overline{E} \colon \C[\cP] \to \C$ to be the unique linear map which satisfies
+\begin{align*}
+\overline{E}(x) &= \begin{cases}
+E(x) &  x \in   \overline{\cL}   \\
+0 & \text{otherwise.}
+\end{cases}
+\end{align*}
+Then $\overline{E}$ induces a linear functional $E \colon \cA_\loc \to \C$. Notice this notation is overloaded, we denote by $E$ both the map $L\to U(1)$ and the corresponding the state on the local algebra. To which definition we are referring should be clear from the context.
+
+
+
+\begin{prop}
+The linear functional $E \colon \cA_\loc \to \C$ is positive linear functional of norm one.
+Furthermore, for $\cI_E$ be the left ideal in $\cA_\loc$ generated by $H_l-E(l)$ for $l\in L$, we have
+\[\cI_E = \{ A\in \cA_\loc \mid E(A^*A)=0\}.\]
+\end{prop}
+\begin{proof}
+Choose a set of coset representations $C$ for $P/L$, letting the coset $L$ be represented by the identity. Write
+\[A = \sum_{p \in C}  \fh_p \big(\sum_{l \in L} a_{pl} H_l \big) = \sum_{p \in C}  \fh_p  l_p .\]
+for $l_p = \sum_{l \in L} a_{pl}  H_l $. Then
+\[E(A^*A) =  \sum_{p,q \in C} \sum_{l,m\in L} \bar{a}_{pl}a_{qm}E(H_l^{-1}\fh_p^{-1}\fh_qH_m).\]
+But $H_l^{-1}\fh_p^{-1}\fh_q H_m \in \overline{\cL}$ if and only if $\fh_p^{-1}\fh_q \in \overline{\cL}$. Since they represent distinct coset representatives of $\cP/\overline{\cL} \cong P/L$, this happens if and only if $p=q$. So,
+ \[E(A^*A) =  \sum_{p \in C} \sum_{l,m\in L} \bar{a}_{pl}a_{pm}\overline{E(l)}E(m) =  \sum_{p \in C}\big \| \sum_{l\in L} a_{pl}E(l) \big \|^2 \geq 0.\]
+Therefore, $E$ is positive.
+
+Clearly, $E(I)=1$, so on any finite-dimensional sub-algebra, which are themselves $C^*$-algebras, this with positivity implies that $E$ has norm one, and so $E$ must be norm one on all of $\cA_\loc$. Therefore, $E$ extends to a state on $\cA$.
+
+Note from the equation above $E(A^*A) $ is zero if and only if
+$ E(l_p)  =0$ for all $p\in C$, which holds if and only if $l_p$ is in the kernel of $E$ restricted to the subalgebra $\C[\overline{\cL}]/([zI]-zI)$.
+
+We prove that $ E(l_p)  =0$ for all $p$ if and only if $l_p \in \cI_E$ for all $p$.
+Suppose that $E(l_p)=0$, then
+\[l_p-E(l_p) =   \sum_{l}  a_{pl} H_l-    \sum_{l}  a_{pl} E(l) =  \sum_{l}  a_{pl}  (H_l- E(l)) \in \C[\overline{\cL}]\cdot \cI_E \]
+and so $A = \sum_{p \in C}  \fh_p  l_p \in \cI_E$. Therefore,
+\[\{ A \in \cA_\loc \mid E(A^*A) = 0 \} \subseteq \cI_E.\]
+
+
+Conversely, we need to show that $\cI_E \subseteq \{ A \in \cA_\loc \mid E(A^*A) = 0 \}$. Note that since $E$ is positive,
+\[  \cN_E^\loc:= \{ A \in \cA_\loc \mid E(A^*A) = 0 \}\]
+is a left ideal of $\cA_\loc$ by Cauchy--Schwartz (see Lemma 2.4.2 of \cite{Naa17}). So it is enough to check that the generators $H_l - E(l)$ of $\cI_E$ are contained in $ \cN_E^\loc$. Because $H$ is a homomorphism into the Pauli group $\cP \subset U(\cA_\loc)$, $H_l$ is unitary and $H_l^* = H_l^{-1} = H_{l^{-1}}$. Furthermore, since $E \colon L \to \rmU(1)$ is a group homomorphism, $E(l^{-1}) = \overline{E(l)}$. We compute:
+\begin{align*}
+E((H_l - E(l))^*(H_l - E(l))) &= E(H_l^*H_l - \overline{E(l)}H_l - E(l)H_l^* + |E(l)|^2 I) \\
+&= E(I) - \overline{E(l)}E(H_l) - E(l)E(H_{l^{-1}}) + 1 \\
+&= 1 - \overline{E(l)}E(l) - E(l)E(l^{-1}) + 1 \\
+&= 1 - 1 - E(l)\overline{E(l)} + 1 \\
+&= 1 - 1 - 1 + 1 = 0.
+\end{align*}
+Thus $H_l - E(l) \in \cN_E^\loc$ for all $l \in L$. Since $\cN_E^\loc$ is a left ideal, it contains the left ideal $\cI_E$ generated by these elements, so that $\cI_E \subseteq  \cN_E^\loc$.
+Therefore,  $\cI_E = \{ A \in \cA_\loc \mid E(A^*A) = 0 \}$ as claimed.
+\end{proof}
+
+\begin{cor}
+The state $E$ extends uniquely to a state $E \colon \cA\to \C$.
+\end{cor}
+
+\begin{defn}
+A state obtained as above from $E \colon L \to \rmU(1)$ is called an \emph{excitation} of the stabilizer code $(L,H)$.
+\end{defn}
+
+In this case, given what we proved above, we get the following concrete description of the GNS-representation.
+\begin{prop}
+The map
+\[\cA_\loc/\cI_E \to \cH_E\]
+is the completion of $\cA_\loc/\cI_E$ with respect to the norm induced by the inner product $\langle [A], [B]\rangle = E(A^*B)$. It
+induces a representation
+\[\pi_E \colon \cA_\loc \to \mathfrak{B}(\cH_E)\]
+which is the restriction of the GNS representation of $\cA$ to $\cA_\loc$.
+\end{prop} 
+
+
+
+
+
+\begin{rem}
+Choose coset representatives $C=\{p\}$ for $P/L$ with $0$ has the representative for the identity coset.
+Every vector in $\cH_E$ has a unique representation as
+\[\sum_{p \in C} a_p \fh_p  \xi_E \]
+for $\sum |a_p|^2<\infty$ and the $ \fh_p  \xi_E$ form an orthonormal basis for $\cH_E$. Indeed,
+\[ \langle  \fh_p  \xi_E,  \fh_q  \xi_E\rangle  = E(\fh_p^*\fh_q) = \delta_{p,q}\]
+since $\fh_p^*\fh_q \in \overline{\cL}$ implies that $p,q$ are in the same coset $C$, which in term implies that they are equal.
+\end{rem}
+
+\subsection{Lagrangian codes}
+
+We are interested in studying systems which have a unique ground state on an infinite lattice. This includes \emph{topological orders} such as the toric code and invertible phases, but also \emph{fractonic codes} such as the X-cube model~\cite{vijay_haah_fu_2016}, Haah's cubic code~\cite{haah_2011} and the Chamon model~\cite{chamon_2005}. Codes with a unique ground state on an infinite lattice will be called \emph{Lagrangian codes} because of the following result.
+
+
+\begin{theorem}\label{thm:topologicalorder}
+Let $E\colon L \to \rmU(1)$ be a homomorphism and denote also by $E$ the associated state of $\cA$. Then $E$ is pure if and only if  $L$ is Lagrangian, that is, $L=L^\perp$.
+\end{theorem}
+
+
+\begin{proof}
+A state $E$ is pure if and only if its GNS representation is irreducible, which holds if and only if every vector of $\cH_E$ is topologically cyclic. Equivalently, by Schur's Lemma, the representation is irreducible if and only if the commutant of $\pi(\cA)$ in $\mathfrak{B}(\cH_E)$ is $\C$.
+
+
+Suppose $L$ is not Lagrangian. Choose an element $p \in L^\perp$ which is not in $L$. Define an operator $U_p$ on $\cH_E$ whose value on the dense subspace $\fA_\loc/\cI_E$ is given by
+\[
+U_p (A \xi_E) = A \fh_p \xi_E
+\]
+where here $A \in \cA_\loc$.
+\[\fh_p^* \fh_q \fh_p = \chi(p, q) \fh_p^*\fh_q\fh_q = \chi(p, q)\fh_q .\]
+If $l\in L$, then $ \chi(p, l)=1$ so
+\[E(\fh_p^* \fh_l \fh_p  )=E(\fh_l).\]
+If $q\not\in L$, then $ E(\fh_q)= 0$ and hence
+$E(\fh_p^* \fh_q \fh_p )  = 0$.
+So, in all cases,
+\[ E(\fh_p^* \fh_q \fh_p) = E(\fh_q).\]
+By linearity, $E(\fh_p^* A \fh_p) = E(A)$ for all $A\in \cA_\loc$. For $A = B^* B$,
+\[
+\lVert U_p (B \xi_E) \rVert^2 = E(\fh_p^* B^* B \fh_p) = E(B^* B) = \lVert B \xi_E \rVert^2.
+\]
+Since $\fh_p \xi_E$ is a cyclic vector, the image of $U_p$ is dense.
+Thus, $U_p$ extends to a unitary operator on $\mathcal{H}_E$.
+Furthermore, $U_p$ commutes with the left action of $\cA_\loc$,
+\[
+U_p \pi_E(B) (A \xi_E) = U_p (B A \xi_E) = B A \fh_p \xi_E = \pi_E(B) U_p (A \xi_E).
+\]
+Therefore, $U_p \in \pi_E(\cA)'$. Finally, since $p \notin L$, $\fh_p \xi_E$ is orthogonal to $\xi_E$. If $U_p$ were a scalar $c I$, then we would have
+\[U_p \xi_E = \fh_p \xi_E = c \xi_E .\]
+This would imply that $c=0$, a contradiction to the fact that $U_p$ is unitary. Thus, the commutant is non-trivial. Therefore, $\pi_E$ is reducible and $E$ is not pure.
+
+
+Conversely, suppose $L$ is Lagrangian and let $T \in \pi(\cA)'$. Write
+\[
+T\xi_E = \sum_{q \in C} \alpha_q \fh_q \xi_E.
+\]
+For any $l$ in $L$, the operator $T$ commutes with $H_l$ so that $H_l(T\xi_E)  = TH_l\xi_E$.
+Since
+\[H_l \fh_q = \phi(l)\fh_l\fh_q = \phi(l) \chi(q,l) \fh_q \fh_l = \chi(q,l) \fh_qH_l,\]
+where $\phi(l)$ was defined so that $H_l = \phi(l) \fh_l$,
+\[
+H_l(T\xi_E) = \sum_{q \in C} \alpha_q H_l \fh_q \xi_E = \sum_{q \in C} \alpha_q \chi(q,l) E(l) \fh_q \xi_E.
+\]
+On the other hand, $TH_l\xi_E = E(l)T\xi_E$. So,
+\[\alpha_q = \alpha_q \chi(q,l)\]
+for all $l \in L$. Because $L = L^\perp$, for any coset representative $q \neq 0$, $q\not\in L^\perp$ so there exists some $l \in L$ such that $\chi(q,l) \neq 1$. This forces  $\alpha_q = 0$ for all $q \neq 0$. Therefore, $T\xi_E = \alpha_0 \xi_E$. Since $T$ commutes with every operator in $\cA$, we also have
+\[
+T(\fh_p \xi_E) = \fh_p (T\xi_E) = \fh_p (\alpha_0 \xi_E) = \alpha_0 \fh_p \xi_E.
+\]
+Therefore, $T\in \C$.
+\end{proof}
+
+
+\begin{lem}\label{cor:degenerate}
+For any state $E\colon L \to \rmU(1)$, the closed subspace
+\[ \mathcal{G}_E =\{v \in \cH_E :  H_l v = E(l)v\}\]
+is spanned by the vectors $\fh_p\xi_E$ for  $p\in L^\perp$.
+Consequently, $\mathcal{G}_E $ is one dimensional if and only if $L$ is Lagrangian.
+\end{lem}
+\begin{proof}
+Let
+\[v = \sum_{p\in C} a_p \fh_p  \xi_E\]
+be such that $H_l v=E(l)v$ for all $l\in L$.
+Since
+\[H_l v= H_l\sum_{p \in C} a_p \fh_p  \xi_E=E(l)  \sum_{p \in C} a_p\chi(p,l) \fh_p  \xi_E \]
+this holds if and only if $a_p=0$ whenever $\chi(p,l)\neq 1$. This proves that $\cG_E$ is the span of $\fh_p  \xi_E$ for $p\in L^\perp$.
+\end{proof}
+
+
+A state $S' \colon \cA \to \C$ is a vector state in the GNS representation of another state $S \colon \cA \to \C$ if there is a unit vector $\phi \in \cH_S$ such that
+\[ S'(A) = \langle \phi, \pi_S(A)\phi \rangle. \]
+It is a cyclic vector state if $\phi$ is cyclic.
+Recall that states are said to be in the same \emph{super-selection sector} if their GNS representations are unitarily equivalent.  Furthermore, this occurs if and if they can be represented as cyclic unit vector states in each other's GNS representation.
+
+
+
+
+
+ \begin{prop}\label{prop:superselection}
+ Let $(L,H)$ be a stabilizer code.
+Given two homomorphisms $E \colon L \to \rmU(1)$ and $E' \colon L \to \rmU(1)$, $\chi(p,-)E=E'$ for some $p\in P$ if and only if the GNS representations of $E,E' \colon \cA \to \rmU(1)$ are unitarily equivalent.
+ \end{prop}
+ \begin{proof}
+ Assume $\chi(p,-)E=E'$. We show $\fh_p \xi_E$ represents the state $E'$. We have
+ \[ \langle \fh_p\xi_E, \fh_q\fh_p\xi_E \rangle = E(\fh_q^*\fh_q\fh_p) = \chi(p,q)E(\fh_q) = \begin{cases}  E'(\fh_q) & q\in \overline{\cL} \\
+ 0 & \text{otherwise}
+ \end{cases}. \]
+
+Conversely, assume that $E' \colon \cA \to \C$ is represented by a non-zero unit vector $\phi = \sum_{p \in C}a_p \fh_p \xi_E $  in the GNS representation of $E$,
+so that
+\[ E'(l)= E'(H_l) =\langle  \phi, H_l \phi \rangle\]
+Since
+\[H_l\phi = E(l) \sum_{p \in C}a_p\chi(p,l)\fh_p\xi_E.\]
+and  $\fh_p\xi_E$ are a orthonormal basis,
+\begin{align*}
+E'(l) &= \langle \phi,H_l \phi \rangle \\
+&=E(l) \sum_{p\in C} |a_p|^2\chi(p,l)
+\end{align*}
+Since $\phi$ is a unit vector, we also have $\sum_{p}|a_p|^2=1$. Let $\alpha(l) =E'(l)/E(l)$. Then
+\[ 1 = \sum_{p\in C} |a_p|^2\chi(p,l) \alpha(l)^{-1}.\]
+So, for $0\leq \theta_p,\theta<2\pi$ so that $\chi(p,l)  =e^{i \theta_p}$ and $\alpha(l) =e^{i\theta}$, we have
+\[  \sum_{p\in C}|a_p|^2 = 1 = \sum_{p\in C}|a_p|^2 \cos(\theta_p-\theta).\]
+So,
+\[  \sum_{p\in C}|a_p|^2(1- \cos(\theta_p-\theta)) =0.\]
+Choose $q$ such that $a_q\neq 0$. Then $1= \cos(\theta_q-\theta)$, so that $\theta_q = \theta$. That is,
+\[ E'(l)/E(l) =\alpha(l)= \chi(q,l). \qedhere\]
+ \end{proof}
+
+
+
+\begin{rem}
+Recall that
+\[ L^\vee = \Hom(L,\rmU(1))\]
+denotes the Pontryagin dual of $L$.  Call two excitations equivalent if there  GNS representations are unitarily equivalent. The previous result then implies that equivalence classes of excitations are in bijection with
+\[ \frac{ L^\vee}{P/L^\perp}\]
+where $P \to L^\vee$ is induced by $p\mapsto \chi(p,-)$.
+\end{rem}
+
+
+
+
+The above hopefully has motivated the following important definition.
+\begin{defn}
+A stabilizer code $(L,H)$ is \emph{Lagrangian} if $L=L^\perp$.
+\end{defn}
+
+Recall that a ground state is \emph{frustration free} if it is a joint eigenstate for all of the terms of the Hamiltonian of lowest energy.
+From \cref{cor:degenerate}, we have.
+\begin{cor}\label{cor:superselection}
+A stabilizer code $(L,H)$ is a Lagrangian if and only if it has a unique frustration free ground state.  Furthermore, for a Lagrangian stabilizer code, super-selection sectors of excitations are in one-to-one correspondences with
+\[ \frac{L^{\vee}}{P/L}\]
+where $L^\vee = \Hom(L,\rmU(1))$ is the Pontryagin dual and the map $P/L \to L^\vee$ is given by $p \mapsto \chi(p,-)$.
+\end{cor}
+
+For a Lagrangian stabilizer code, we write
+\[ \sQ_L:=\frac{L^{\vee}}{P/L}.\]
+
+\section{Charge Modules}
+
+
+
+
+
+
+
+We turn to the topic of excitations of a stabilizer code. Without translation invariance, this topic is subtle and the definitions depend on the choice of local generators $\cB$. Therefore, we now work only in the translation invariant context, which amount to treating $P$ as an $R$-module and working with its $R$-submodules.
+
+\begin{defn}
+ Let $ L \subset P$ be an $R$-submodule. The \emph{orthogonal complement} of $L$ is the subgroup
+\[L^\perp =  \{ p \in P \mid \Omega(p,l)=0  \ \text{for all} \ l \in L \}.\]
+The subgroup $L$ is called \emph{isotropic} if $L\subset L^\perp$ and \emph{Lagrangian} if $L=L^\perp$.
+\end{defn}
+
+
+
+\subsection{Local Excitations}
+Local excitations of a stabilizer code $(L,H)$ are those homomorphisms $E \colon L \to \rmU(1)$ for which the associated state looks like the ground state outside of a finite region.
+More specifically, the parent Hamiltonian is the formal sum
+\[H=-\sum_{S\in\mathcal B}(S+S^\dagger),\]
+and $S\xi_E=\xi_E$ for all but finitely many $S\in\mathcal B$.
+More formally, we make the following definition, where we take advantage of the fact that $L$ is $n$-torsion so that any homomorphism to $\rmU(1)$ factors through $\exp \colon \Z_n \to \rmU(1)$.
+\begin{defn}\label{defn:local_excitation}
+Let $L$ be an isotropic $R$-submodule of $P$.
+A \emph{local excitation} of $L$ is a homomorphism
+\[ E \colon L \to \Z_n \]
+such that, for every $l\in L$, $E(x^\lambda l)=0$ for all but finitely many $\lambda$'s. The \emph{vacuum} is the trivial excitation, which maps $l$ to $0$ for all $l \in L$. It is also called the \emph{ground state}.
+\end{defn}
+
+For an excitation $E$, the associated GNS cyclic vector $\xi_E$ satisfies
+\[H_l\xi_E=\zeta^{E(l)}\xi_E.\]
+For each $b_i\in B$, locality gives $E(x^\mu b_i)=0$ for all but finitely many $\mu\in\Gamma$. Since $B$ is finite, there is a common $N$ such that
+\[
+H_{x^\mu b_i}\xi_E=\xi_E
+\qquad\text{for all }i\text{ and }\|\mu\|_\infty>N.
+\]
+Thus only finitely many elementary stabilizers in $\mathcal B$ have eigenvalue different from $1$; the union of their supports is finite.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Local excitations have a natural description in terms of the module structure.
+For any $R$-module $M$, the \emph{local homomorphisms}
+\[\fHom(M,\Z_n)\]
+are those homomorphisms $E \colon M \to \Z_n$ such that for each $l$, $E(x^\lambda l)=0$ for all but finitely many $\lambda$'s.
+The local excitations are thus isomorphic to
+$ \fHom(L,\Z_n)$.
+
+
+
+The module structure allows us to cast these definitions in the category of $R$-modules.
+For an $R$-module $M$, we let
+\[M^*=\Hom_R(M,R)\]
+be the collection of $R$-module homomorphism, equipped with the $R$-module structure given by $(r\varphi)(m) = \varphi(\bar{r}m) = \bar{r}\varphi(m)$.
+ \begin{prop}\label{prop:lochom}
+Let $M$ be an $R$-module. Then
+\[ M^* \cong \Hom^\loc(M,\Z_n)\]
+where the isomorphism takes $E \colon M \to \Z_n$ to
+  \[ s_E(m) = \sum_{\lambda \in \Z^d} E(x^{-\lambda} m) x^\lambda\]
+  and the inverse send an $R$-module homomorphism $s \colon M \to R$ to its constant term.
+  \end{prop}
+
+\begin{proof}
+Assume that for each $l \in L$, $E(x^\lambda m) = 0$ for all but finitely many $\lambda$'s. Then
+\[ s_E(m) = \sum_{\lambda \in \Z^d} E(x^{-\lambda}m) x^\lambda \]
+has only finitely many non-zero coefficients and is an element of $R$. Since $E$ is a group homomorphism, $s_E$ is additive. To see that it is an $R$-module homomorphism, we only need to check linearity under multiplication by a generator $x^\mu$ and
+\begin{align*}
+s_E(x^\mu m) &= \sum_{\lambda \in \Z^d} E(x^{-\lambda} x^\mu m) x^\lambda \\
+&= \sum_{\lambda \in \Z^d} E(x^{-(\lambda-\mu)} m) x^{\lambda-\mu} x^\mu \\
+&= x^\mu \sum_{\gamma \in \Z^d} E(x^{-\gamma} m) x^\gamma \\
+&= x^\mu s_E(m).
+\end{align*}
+So, $s_E$ is an $R$-module homomorphism.
+
+Take an $R$-module homomorphism $s \colon M \to R$. Write
+\[s(m) = \sum_{\mu} s_\mu(m) x^\mu.\]
+Then $E(m)= s_0(m)$ is a homomorphism $M \to \Z_n$. Fix $m\in M$. Then
+\[   \sum_{\mu} s_\mu(m) x^{\lambda +\mu}= x^\lambda s(m) = s(x^{\lambda} m) = \sum_{\mu} s_\mu(x^{\lambda} m) x^\mu.\]
+So,
+\[E(x^\lambda m ) = s_0(x^\lambda m) = s_{-\lambda}(m)\]
+and since $s(m)$ is a Laurent polynomial, all but finitely many of its coefficients are zero.
+\end{proof}
+
+
+
+Henceforth, we identify $L^*$ with $\fHom(L,\Z_n)$.
+
+
+\begin{defn}
+A local excitation is \emph{locally creatable} if it is in the image of the map
+\[ P \to   L^*\]
+given by
+\[ p \mapsto \omega(p,-) \colon L \to\Z_n,\]
+or equivalently, by the $R$-module map $p \mapsto \Omega(p,-)$.
+\end{defn}
+Note that since $L$ is isotropic, $\omega(l,l')=0$ for all $l,l'\in L$ and so the map $P \to L^*$ factors as a homomorphism
+\[ P/L \to   L^*.\]
+Further,  this is an injection if and only if $L$ is Lagrangian, that is, if and only if the only elements $p\in P$ such that $\omega(p,l)=0$ for all $l\in L$ are those of $L$.
+
+
+
+\begin{defn}
+Let $(L,H)$ be a Lagrangian stabilizer code. The \emph{super-selection sectors} of $L$ is the abelian group
+\[Q_L:= \frac{L^*}{P/L} \]
+It is the quotient of the local excitations by the locally creatable excitations.
+\end{defn}
+
+\section{Eigenstates and projectors}
+For the rest of the paper we set $E_0$ to be the vacuum state. We denote by $B(z,r)$ the ball of radius $r>0$ centered at $z\in\Gamma$ in the $\ell^\infty$ norm, and set $\mathcal B_\Lambda=\{S\in\mathcal B:\operatorname{supp}(S)\subset\Lambda\}$ for $\Lambda\subset\Gamma$. The elements of $\mathcal B$ are the elementary stabilizers defined above. We also now restrict to translation invariant local Lagrangian Pauli codes.
+\subsection{Eigen states}
+\begin{lem}[The Cauchy–Schwarz inequality for states, Prop 4.3.1 in \cite{kadison_1983}]
+    Let $\rho$ be a state and $A,B\in\cA$, then  $|\rho(A^*B)|^2\leq\rho(A^*A)\rho(B^*B)$.
+\end{lem}
+\begin{defn}[{\cite[Definition 1]{rinehart_2021}}]
+    Let $\cA$ be a unital $C^*$ Algebra, and $A\in\cA$. An \textbf{eigenstate} of $A$ is state $\rho$ such that 
+    \[
+        \rho(BA)=\lambda\rho(B) \quad\forall B\in\cA
+    \]
+    Where $\lambda$ is the eigenvalue.
+\end{defn}
+\begin{prop}[{\cite[Theorem 2]{rinehart_2021}}]\label{prop: alternative eigenstate}
+    A state $\rho$ is an eigenstate of $A\in \cA$ with eigenvalue $\lambda$ if and only if $\rho((A-\lambda I)^*(A-\lambda I))=0$.
+    \begin{proof}
+        The forward direction follows from noticing that if $\rho$ is an eigenstate of $A$ then $\rho(y(A-\lambda I))=0$ for all $y$. The reverse follows from applying the Cauchy-Schwarz inequality. 
+    \end{proof}
+\end{prop}
+\begin{prop}\label{prop: eigenvalue implies eigenstate for unitaries}
+    A state $\rho$ is an eigenstate of a unitary $U\in \cA$ with eigenvalue $|\lambda|=1$ if and only if $\rho(U)=\lambda$.
+    \begin{proof}
+        The forward direction is obvious. To see the reverse, let $\rho(U)=\lambda$. We then find $\rho\bigl((U^*-\lambda^*)(U-\lambda)\bigr)=\rho(2-\lambda U^*-\lambda^*U)=0$. By proposition \ref{prop: alternative eigenstate} $\rho$ is an eigenstate of $U$ with eigenvalue $\lambda$  
+    \end{proof}
+\end{prop}
+\begin{lem}
+    Let $U\in\mathcal P$ be a Pauli such that $U^n=I$ . Then $U$ has eigenvalues that lie in the $n$-th roots of unity. 
+    \begin{proof}
+         This is an obvious consequence of prop \ref{prop: eigenvalue implies eigenstate for unitaries} and the definition of an eigenstate. 
+    \end{proof}
+\end{lem}
+\begin{prop}[{\cite[Theorem 3]{rinehart_2021}}]
+    A state $\rho$ is an eigenstate of $A\in \cA$ iff its GNS cyclic unit vector $\xi_\rho$ is an eigenvector of $\pi(A)$. 
+    \begin{proof}
+        The forward direction is trivial. For the reverse direction, we have 
+        \begin{align*}
+            \rho((A-\lambda I)^*(A-\lambda I))&=\langle\xi_\rho\pi_\rho(A-\lambda I), \pi_\rho(A-\lambda I)\xi_\rho\rangle=0
+        \end{align*}
+        So $\pi_\rho(A-\lambda I)\xi_\rho=0$, and therefore $\pi_\rho(A)\xi_\rho=\lambda\xi_\rho$.
+    \end{proof}
+\end{prop}
+\begin{prop}
+    Let $\rho$ be a pure state, $\rho$ is an eigenstate of unitary $U\in\cA$ iff $\rho(U^*AU)=\rho(A)$ for all $A\in\cA$.
+    \begin{proof}
+        Let $\xi_\rho$ be the cyclic unit vector of the GNS representation of $\rho$, then $\rho\circ\operatorname{Ad}(U)$ is a vector state corresponding to the vector $\eta=\pi_\rho(U)\xi_\rho$ in the GNS representation. By assumption $\rho=\rho\circ\operatorname{Ad}(U)$ and by the uniqueness of the GNS representation of $\rho$ there exists a unitary $V\in\mathcal B(\mathcal H_\rho)$ such that $V\xi_\rho=\eta$ and $V\pi_\rho(A)=\pi_\rho(A) V$ for all $A\in\cA$. That is, $V\in\pi_\rho(\cA)'$. However, since $\rho$ is pure, it has trivial commutant, and it follows that $\eta=\lambda\xi_\rho$ for some scalar $\lambda$. We find $\pi_\rho(U)\xi_\rho=\lambda\xi_\rho$, and the result follows from the previois propisition.
+    \end{proof}
+\end{prop}
+\begin{prop}\label{prop: omega_e describe all the local stabilizer eigenstates}
+    If $\rho$ is eigenstate for each $U\in \mathcal L$, and $\rho(U)\neq1$ for only finitely many elementary stabilizers $S\in \mathcal B$, then $\rho=E$ for some $E\in L^*$.
+    \begin{proof}
+        The map $L\to U(1)$ given by $\rho(H_l)$ for $l\in L$ is local by assumption, and has the desired algebraic properties since $\rho$ is an eigenstate. Moreover, since $H(L)\subset\mathcal P$  we must have $\rho(H(L))$ taking values in the $n$'th roots of unity. We need only check that $\rho(A)=0$ for Paulis $A\notin\bar{\mathcal L}$. Let $A$ be such a Pauli, then there exists $S\in \mathcal L$ with $\omega(S,A)\neq0$. It follows that $\rho(S^*AS)=\rho(A)=\rho(A)e^{\frac{2\pi i}{n}\omega(S,A)}$. But this is only possible if $\rho(A)=0$. 
+    \end{proof}
+\end{prop}
+
+\subsection{Projectors}
+\begin{defn}
+    $P\in\cA$ is called a projection if $P^*P=P$.
+\end{defn}
+\begin{lem}
+    If $P$ is a projector, then the following hold
+    \begin{enumerate}
+        \item $1-P$ is a projection
+        \item $P^2=P$
+        \item $P^*=P$
+    \end{enumerate}
+\end{lem}
+\begin{prop}[Prop 2.5.2 in \cite{kadison_1983}]\label{prop: Projection props}
+    If $E$ and $F$ are the projections from a Hilbert space $\mathcal H$ onto closed subspaces $Y$ and $Z$ respectively, then the following are equivalent
+    \begin{enumerate}
+        \item $Y\subset Z$
+        \item $FE=E$
+        \item $EF=E$
+        \item $\norm {Ex}\leq \norm{Fx}$ for $x\in\mathcal H$
+        \item $E\leq F$
+    \end{enumerate}
+\end{prop}
+\begin{lem}
+    Let $\rho$ be a state and $E,F\in \cA$ be commuting projections with $EF=E$. Then $|\rho(E)|\leq|\rho(F)|$ and $|\rho(1-E)|\geq|\rho(1-F)|$
+    \begin{proof}
+        Pass to the GNS representation of $\rho$ and apply the previous proposition. 
+    \end{proof}
+\end{lem}
+\begin{lem}
+    Let $E$ and $F$ be commuting projectors on a Hilbert space $\mathcal H$.Then  $\norm{EFx}\leq\norm{\frac{1}{2}(E+F)x}$ for $x\in\mathcal H$.
+    \begin{proof}
+    We have $\norm{\frac{1}{2}(E+F)x}^2=\langle x,\frac{1}{4}(E+F)^2x\rangle=\langle x,\frac{1}{4}(E+F+2EF)x\rangle$. And by prop \ref{prop: Projection props}  we have that $\norm{EFx}\leq \norm{Ex}$ and $\norm{EFx}\leq \norm{Fx}$. We find
+    \begin{align*}
+        \norm{\frac{1}{2}(E+F)x}^2-\norm{EFx}^2&=\langle x,\frac{1}{4}(E+F+2EF)x\rangle- \langle x,EFx\rangle\\
+        &= \langle x, \frac{1}{4}(E+F-2EF)x\rangle \\
+        & = \langle x,\frac{1}{4}(E-F)^2x\rangle \\
+        &= \norm{\frac{1}{2}(E-F)x}^2 \geq 0
+    \end{align*}
+    Hence $\norm{EF}\leq \norm{\frac{1}{2}(E+F)x}$ 
+    \end{proof}
+\end{lem}
+\begin{lem}
+    Let $E$ and $F$ be commuting projectors on a Hilbert space $\mathcal H$.Then  $\norm{(1-EF)x}\leq\norm{(1-E)x}+\norm{(1-F)x}$ for $x\in\mathcal H$.
+    \begin{proof}
+        \begin{align*}
+            \norm{(1-EF)x}&=\norm{(1-E+E(1-F))x}\\
+            &\leq \norm{(1-E)x}+\norm{E(1-F)x}\\
+            & \leq  \norm{(1-E)x}+\norm{(1-F)x}
+        \end{align*}
+    \end{proof}
+\end{lem}
+\begin{defn}
+    For $A\in\mathcal P$ such that $A^n= I$ define the projector 
+    \[
+        P_A=\frac{1}{n}\sum_{k=0}^{n-1}A^k
+    \]
+    Which has the property that $AP_A=P_A$.
+\end{defn}
+\begin{lem}\label{lem: eigenstates from projectors}
+    $\rho$ is an eigenstate of $A\in \mathcal P$ with eigenvalue $1$ iff $\rho(P_A)=1$. 
+    \begin{proof}
+        Let $\rho(P_A)=1$ then $\frac{1}{n}\sum_{k=0}^{n-1}\rho(A^k)=1$. Since $|\rho(A^k)|\leq1$ this is only possible if $\rho(A^k)=1$ for each $k$. The reverse direction is trivial. 
+    \end{proof}
+\end{lem}
+\begin{prop}\label{prop: finite order Paulis have eigenstates}
+    Let $\{S_1,\ldots S_m\}$ be a finite set of commuting unitary operators on Hilbert space $\mathcal H$ with $S_i^n=1$ for each $i$. Then there exists a simultaneous eigenvector in $\mathcal H$ of each $S_i$. 
+    \begin{proof}
+        Recall that $\zeta=e^{\frac{2\pi i}{n}}$ and define 
+        \[
+            P_{ji}=\frac{1}{n}\sum_{k=0}^{n-1}\zeta^{-kj}S^k_i
+        \]
+        The projector onto the $\zeta^j$ eigenspace of $S_i$. It holds that $S_iP_{ij}=\zeta^jP_{ij}$ for each $i$ and $j$. It also holds that $\sum_{j=0}^{n-1}P_{ji}=I$, thus $\mathcal H$ decomposes as $\mathcal H=\bigoplus_j P_{ij}(\mathcal H)$ for each $i$. Each $S_i$ therefore has an eigenvector, moreover for each $x\in \mathcal H$ and $S_i$ there exists $j$ such that $P_{ij}x\neq 0$. Now given $x\in \mathcal H$ take $j_1$ such that $P_{1j_1}x=x_1\neq0$. Now do the same for $P_{2j_2}x_1=x_2\neq0$ and so on by induction. We find
+        \[
+            x_m=\prod_{i=1}^mP_{ij_i}x\neq 0
+        \]
+        Since each projector $P_{ij}$ commutes with each other, it follows that $x_n$ is a simultaneous eigenvector for all $S_i$. \noah{I think there may be an easier proof by using the fact that the set $\{S_1,\ldots S_n\}$ generates a finite abelian group, and a representation of an abelian group should decompose into 1d subspaces but I'm not sure how this works for infinite-dimensional vector spaces.}
+    \end{proof}
+\end{prop}
+\section{Selection Criterion}
+\begin{defn}\label{def: Selection Criterion}
+    A pure state $\rho$ satisfies the selection criterion if for all $\epsilon>0$ there exists a finite region $\Lambda\subset \Gamma$ such that for any ball $B\subset \Lambda^c$ we have 
+    \[
+        |\rho(A)-E_0(A)|<\epsilon||A||
+    \]
+    For $A\in \cA_{B}$. \noah{I'll often say $\Lambda$ is the region such that $\rho$ satisfies the selection criterion for $\epsilon$.}
+\end{defn}
+\begin{lem}
+    Let $\rho$ be a pure state satisfying the selection criterion. Then for all $\epsilon>0$ there exists a finite region $\Lambda\subset\Gamma$ such that $|\rho(U)-1|<\epsilon$ for all $U\in\mathcal B_{\Lambda^c}$.
+    \begin{proof}
+         Take a region $\Lambda_1\subset\Gamma$ satisfying the selection criterion for $\epsilon$. Every element of $\mathcal B$ has uniformly bounded support of radius $R$. take the enlarged finite region $\Lambda_1\subset\Lambda_2$ such that if $B$ is ball radius $R$ and $\mathcal B_{B}\cap\mathcal B_{\Lambda^c}\neq0$ then $B \subset\Lambda_2$. That is, we add a buffer of radius $R$ to $\Lambda_1$. Now every element of $\mathcal B_{\Lambda_2^c}$ has support in a ball lying in the complement of $\Lambda_2$. Taking $\Lambda=\Lambda_2$ completes the proof. 
+    \end{proof}
+\end{lem}
+From here on, we will use this enlarged region for the selection criterion.
+\begin{lem}
+    Let $\rho$ be a pure state satisfying the selection criterion. Then for all $\epsilon>0$ there exists a finite region $\Lambda\subset\Gamma$ such that 
+    \[
+        |\rho(P_S)-1|<\epsilon
+    \]
+    For all $S\in\mathcal L_{\Lambda^c}$ such that $\operatorname{Supp}(S)\subset B$ for some ball $B\subset\Lambda^c$.
+    \begin{proof}
+        Take a region $\Lambda$ satisfying the selection criterion for some $\epsilon>0$. We have 
+        \begin{align*}
+            |1-\rho(P_S)|&=|1-\frac{1}{n}\sum_{k=0}^{n-1}\rho(S^k)| \\
+            &<\frac{1}{n}\sum_{k=0}^{n-1}|1-\rho(S^k)|\\
+            &<\epsilon
+        \end{align*}
+        Where the last line follows since $S^k$ is also a stabilizer. 
+    \end{proof}
+\end{lem}
+
+\begin{lem}
+    If $A\in\mathcal P\setminus\overline{\mathcal L}$, then there exists an elementary stabilizer $U\in\mathcal B$ such that $\omega(U,A)\neq0$.
+    \begin{proof}
+        Since $\mathcal B$ generates $\mathcal L$, if $A$ commutes with every element of $\mathcal B$, then it commutes with every element of $\mathcal L$. Its class in $P$ therefore lies in $L^\perp=L$, by the standing Lagrangian assumption. Hence $A\in\overline{\mathcal L}$, contradicting the hypothesis.
+    \end{proof}
+\end{lem}
+\subsection{Half-Spaces}
+\begin{defn}
+    The halfspaces $H_i^{\pm}(a)\subset\Gamma$ are defined.
+    \[
+        H_i^+(a)=\{x\in \Gamma, x_i \geq a \}
+    \]
+    \[
+        H_i^-(a)=\{x\in \Gamma, x_i \leq a \}
+    \]
+\end{defn}
+\begin{lem}\label{lem: Balls in complements lie in half spaces}
+    Let $B(0,m)$ be a ball. Then for every ball $B\subset B(0,m)^c $ there exists at least once half-space $H_i^\pm\equiv H_i^\pm(\pm m)$ such that $B\subset H_i^\pm$
+    \begin{proof}
+        Assume the statement were false. A ball $B(z,r)\not\subset H_i^+\cup H_i^-$ implies that there exists $x\in B(z,r)$ such that $x_i \in \left[-m,m\right]\cap (z_i-r,z_i+r)$. For each such $x$ let $y_i=x_i$ and let $y=(y_1,\ldots, y_d)$. Clearly $y\in B(z,r)$, however $\norm{y}\leq m$ and hence $z\in B$, a contradiction since this would imply $B(0,m)\cap B(z,r)\neq \emptyset$
+        
+        Thus $\norm{x}\leq m$ for $x\in B$ and $x\in B(0,m)$, a contradiction. See figure \ref{fig:lemma45} for an illustration.
+    \end{proof}
+    \begin{figure}[ht]
+      \centering
+      \resizebox{\textwidth}{!}{%
+        \input{figures/ball_in_complement_halfspace_tikz_only.tex}%
+      }
+      \caption{A ball contained in the complement of $\Lambda=B(0,r)$
+      lies entirely in some half-space $H_i^{\pm}$; a ball that
+      cannot be contained entirely in a half-space would intersect $\Lambda$.}
+      \label{fig:ball-in-complement-halfspace}
+    \end{figure}
+\end{lem}
+\begin{lem}\label{lem: halfspace decomposition}
+    Let $B(z,r)$ be a ball, then there exists a number $N$ such that for any finite region $\Lambda\subset B(z,r)^c$ there exists a family of balls $\{B_j\}_{j\in1,\ldots n}$  covering $\Lambda$ with $B_j\subset B(z,r)^c$  and $n\leq N$. That is 
+    \[
+        \Lambda\subset\bigcup_{j=1}^nB(z_j,r_j)
+    \]
+    \begin{proof}
+        It is sufficient to check a ball at the origin $B(0,r)$. Define the half-spaces $H_i^\pm\subset\Gamma$ 
+        \[
+            H_i^+\equiv H_i^+(r)=\{z\in\Gamma|z_i>r\}
+        \]
+        \[
+            H_i^-\equiv H_i^-(-r)=\{z\in\Gamma|z_i<-r\}
+        \]
+        It is clear that $B(0,r)^c=\bigcup H_i^\pm$. There are $2d$ such half-spaces. Moreover, for any subregion $F\subset H_i^\pm$ there exists a ball $B_i^\pm\subset H_i^\pm$ covering $F$. To see this let $R=\max(\norm{z}|z\in F)$ and take $B^\pm_i=B(\pm 2Re_i,2R-r)$. Now, for any finite region $\Lambda\subset \Gamma$ let $\Lambda_i^\pm=\Lambda\cap H_i^\pm$ and find a covering of $\Lambda_i^\pm$ by ball $B_i^\pm$ defined as before. There are always at most $2d$ such balls by construction, completing the proof.  An illustration of these half-spaces and balls in $d=2$ is found below in figure \ref{fig:lemma45} .
+
+    \begin{figure}[ht]
+      \centering
+      \resizebox{\textwidth}{!}{%
+        \input{figures/lemma45_tikz_only.tex}%
+      }
+      \caption{Illustration of Lemma~\ref{lem: halfspace decomposition}. The complement of the central
+      ball decomposes into $2d$ half-spaces; in $d=2$,
+      a finite region $\Lambda\subset B(0,r)^c$ can be covered by
+      four balls, each lying entirely within one half-space.}
+      \label{fig:lemma45}
+    \end{figure}
+    \end{proof}
+\end{lem}
+\begin{prop}\label{prop: Stabilizers decomposition support bound}
+    Let $H_i^\pm(a)$ be a half-space. Then there is a positive constant $c_i^\pm$ that does not depend on $a$ such that for any $U\in\mathcal L$  with $\operatorname{supp}(U)\subset H$ there is a decomposition of $U$ into elementary stabilizers $U=S_1\ldots S_m$ such that $S_i\in\mathcal B$ and
+    \[
+        \bigcup_{i}\operatorname{supp}(S_i)\subset H_i^\pm(a\mp c_i^{\pm}) 
+    \]
+
+    \begin{proof}
+        Without loss of generality, we consider $H_1^+(0)$. Define the half-space subring $R_H=\Bbb Z_n[x_1, x_2^\pm.\ldots, x_d^\pm]\subset R$ and for any free $R$-module $F$ define $F_H$ to be the submodule of linear combinations of basis elements of $F$ with coefficients in $R_H$. Let $L_H=L\cap P_H$ be the module of stabilizers supported in the $+x_1$ half-space. We have that $P_H\cong R_H^{2m}$, which is Noetherian as an $R_H$ module since $R_H$ is Noetherian. Hence $L_H$ is a finitely generated $R_H$ module. Therefore every element $u\in L$ can be decomposed 
+        \[
+            \sum h_i u_i
+        \]
+        With $u_i\in L_H$ and $h_i\in R_H$.
+        \par Now take $G=R^t$ with basis $\{\gamma_1,\ldots,\gamma_t\}$ and let $\sigma:G\to L$ be the $R$-linear surjection defined by $\sigma(\gamma_i)=b_i$, where $B=\{b_1,\ldots,b_t\}$ is our chosen finite $R$-generating set. Choose $g_i\in G$ such that $\sigma(g_i)=u_i$. There are a finite number of such $g_i$, hence there is a positive constant $c$ such that $\operatorname{supp}(g_i)\subset \{x_1\geq -c\}$ for all $g_i$. As a result, for each $u\in L_H$ there exists $\gamma\in G$ such that $\sigma(\gamma)=u$ and $\operatorname{supp}(\gamma)\subset \{x_1\geq -c\}$. Moreover, $u$ has a decomposition into elementary stabilizers
+        \begin{align*}
+            u&=\sigma(\gamma)\\
+            &= \sum_i r_i\sigma(\gamma_i) 
+            \\
+            &= \sum_i\sum_{x\in\Gamma}a_i^xx\sigma(\gamma_i) \\
+            &= \sum_i\sum_{x\in\Gamma}a_i^xx b_i
+        \end{align*}
+        Then it follows that
+        \[
+            \bigcup_{a_i^g\neq0}\operatorname{supp}(gb_i)\subset\{x_1\geq -c+-R\} 
+        \]
+        for some positive constant $R$, since $B$ is finite and each $b\in B$ has finite support. In particular any Stabilizer $U\in\mathcal L$, supported on the half space $\{x|x_1\geq 0\}$  has a decomposition in $\mathcal B$ with each of its factors supported on $\{x|x_1\geq  -c_1^+-R\}$. Setting $c_1^+=c+R$ gives the desired result. By translation invariance, this constant can not depend on arbitrary translations of the half space. \noah{I think there may be a couple of off-by-one errors here}
+    \end{proof}
+\end{prop}
+\begin{thm}
+    Let $\rho$ satisfy the selection criterion. Then there exists a finite region $\Lambda\subset\Gamma$ such that $\rho$ is unitarily equivalent to a state $\tilde\rho$ that is a $+1$ eigenstate of every elementary stabilizer $S\in \mathcal B_{\Lambda^c}$   
+    \begin{proof}
+        Take a region $\Lambda_1$ satisfying the selection criterion for some $\delta>0$, we can always expand this into some ball $\Lambda_1\subset B$. Let $(\pi_\rho,\xi_\rho,\mathcal H_\rho)$ be the GNS representation of $\rho$. For any finite region $F\subset B^c$ define the projector 
+        \[
+            P_{F}=\pi_\rho(\prod_{S\in\mathcal{B}_{F}}P_S)
+        \]
+        Then the family $\{\pi_\rho (P_F)\}_{F\subset{\Lambda^c}}$ forms a decreasing net of commuting projections on $\mathcal H_\rho$. And the operator $P\equiv\wedge\{ P_F\}_{F\subset{\Lambda^c}}=\prod_{F\subset{\Lambda^c}}P _F$ is well defined bounded operator on $\mathcal H$ with 
+        \[
+            Px=\lim_{F}P_Fx
+        \]
+        For $x\in \mathcal{H}_\rho$ (prop 2.5.7 in \cite{kadison_1983}). For every finite region $F\subset B^c$, cover $F$ with $2d$ balls  $F\subset\bigcup_{j=1}^{2d} B_j$ using lemma \ref{lem: halfspace decomposition} and define $F_j=F\cap B_j$. Each ball $B'\subset B^c $ lies entirely within some half space, so the support of each elementary stabilizer $S\in \mathcal B_{B^c}$ also lies entirely within some half space. It is then  true that $P_F=\prod_{j=1}^{2d}P_{F_j}$ with $\operatorname{supp}(P_{F_j})\subset B_j$. Using the properties of projectors, we find the following inequality
+        \begin{align*}
+            |1-\langle\xi_\rho, P_F\xi_\rho\rangle|&=|\langle\xi_\rho, (1-P_F)\xi_\rho\rangle| \\
+            &\leq |\sum_{j=1}^{2d} \langle\xi_\rho, (1-P_{F_j})\xi_\rho\rangle|\\
+            &\leq\sum_{j=1}^{2d}|1- \langle\xi_\rho, P_{F_j}\xi_\rho\rangle| \\
+            & \leq\sum_{j=1}^{2d}\delta
+        \end{align*}
+        Where the last inequality follows since $P_{F_j}$ is supported on the ball $B_j\subset B^c$. That is, $|\langle\xi_\rho,P_F\xi_\rho\rangle|\geq1-2d\delta$ and it follows that $\norm{P_F\xi_\rho}^2>1-2d\delta$ for all $F$, hence $\norm{P\xi_\rho}>0$ when $\delta$ is set sufficiently small. Let $\eta=\frac{P\xi_\rho}{\norm{P\xi_\rho}}$ and define the vector state $\tilde\rho(A)=\langle\eta,A\eta\rangle$. Since $\rho$ is pure, we have $\tilde\rho$ is pure and unitarily equivalent to $\rho$ by theorem 5.1.7 in \cite{Murphy_1990}. Moreover $\rho$ is a simultaneous $+1$ eigenstate of each stabilizer in $\mathcal B_{B^c}$. This follows from the fact that $\pi(P_S)\eta=\eta$ since $P_SP=P$, so
+        \begin{align*}
+            \tilde\rho(P_S)&=\langle \eta, \pi_\rho(P_S)\eta\rangle \\
+            &=1
+        \end{align*}
+        and $\tilde\rho$ is a $+1$ eigenstate of $S$ by lemma \ref{lem: eigenstates from projectors}. Setting $\Lambda=B$ then gives the desired result.  
+    \end{proof}
+\end{thm}
+\begin{thm}\label{thm: selection criterion implies equivalence to some omega_e}
+    Let $\rho$ satisfy the selection criterion; then $\rho$ is unitarily equivalent to some $E$.
+    \begin{proof}
+        Let $(\pi_\rho,\xi_\rho,\mathcal H_\rho)$ be the GNS representation of $\rho$. Let $\tilde \rho$, $\eta$, $P$, and $\Lambda$ be as in the previous theorem. Since $\Lambda$ is finite, the set $\mathcal B_\text{in}=\mathcal B\backslash \mathcal B_{\Lambda^c}$ is finite. Define the Hilbert space $\mathcal H_1=P\mathcal H_\rho$, which we have shown is nonempty in the previous theorem. Since all stabilizers commute, we have that $\pi_\rho(S)$ preserves $\mathcal H_1$ for $S\in\mathcal B$. The set $\{\pi_\rho(S), S\in\mathcal B_\text{in}\}$ is now a finite commuting family of finitely supported Pauli operators. It follows that there exists an element $x\in\mathcal H_1$ that is a simultaneous eigenvector of all operators in $\{\pi_\rho(S), S\in\mathcal B_\text{in}\}$ by prop \ref{prop: finite order Paulis have eigenstates}. Choose $x$ to be normalized Let $\phi(A)=\langle x,\pi _\rho (A )x\rangle$ be the vector state represented by $x$. Then $\phi(A)$ is an eigenstate for every $S\in\mathcal B$ since every element of $\mathcal H_1\subset\mathcal H$ is a simultaneous $+1$ eigenstate of all other elementary stabilizers. Moreover, $\phi(S)\neq1$ for only finitely many $S\in\mathcal B$. Therefore $\phi=E$ for some $E\in L^*$ by prop \ref{prop: omega_e describe all the local stabilizer eigenstates}. Since $\phi$ is a vector state of a state in the GNS Hilbert space of a pure state $\rho$ we have $\rho \sim \phi=E$, completing the proof. 
+    \end{proof}
+\end{thm}
+\begin{prop}\label{prop: excitation states satisfy strong selection criterion}
+   Let $E\in L^*$. Then there exists a region $\Lambda\subset\Gamma$ such that 
+   \[
+    E(A)=E_0(A)
+   \]
+   For all $A\in\cA$ supported on a ball $B\subset\Lambda^c$. In particular, $\Lambda$ satisfies the selection criterion.
+   \begin{proof}
+       It suffices to compare the states on Pauli operators. Both states vanish outside $\overline{\mathcal L}$, and scalar phases factor out, so it is enough to compare them on $\mathcal L$. Define
+       \[
+           B_E=\{x^\mu b:\mu\in\Gamma,\ b\in B,\ E(x^\mu b)\neq0\}.
+       \]
+       For each $b\in B$, locality gives $E(x^\mu b)=0$ for all but finitely many $\mu\in\Gamma$, where $E(x^\mu b)\in\mathbb Z_n$ is the additive excitation value and $E(H(x^\mu b))=\zeta^{E(x^\mu b)}$ is its state expectation. Since $B$ is finite, $B_E$ is finite and contains every translated generator on which the excitation is nonzero. Set
+       \[
+           \Lambda_1=\bigcup_{s\in B_E}\operatorname{supp}(H_s).
+       \]
+       Every $S\in\mathcal B$ supported in $\Lambda_1^c$ satisfies $E(S)=1=E_0(S)$. Let $B(0,r)$ be some ball containing $\Lambda_1$ and define $c=\max\{c_i^\pm\}$ as in prop \ref{prop: Stabilizers decomposition support bound}. Now let $\Lambda_2= B(0,r+c)$. We have shown that any ball in $\Lambda_2^c$ is contained entirely within some half-space $H_i^\pm(\pm (r+c))$. Moreover,  every $U\in\mathcal L$ supported entirely within $H_i^\pm(\pm (r+c))$ has a decomposition  of into elementary stabilizers $S_1,\ldots S_n\in\mathcal B$, each of which is supported on $H_i^\pm(\pm r)$ by proposition \ref{prop: Stabilizers decomposition support bound}. But such elementary stabilizers lie outside of $B(0,r)$, in particular outside $\Lambda_1$. So $E(S_i)=1$ for each $S_i$ and therefore $E(U)=1=E_0(U)$. Setting $\Lambda=\Lambda_2=B(0,r+c)$ gives the desired result.
+   \end{proof}
+\end{prop}
+\begin{prop}[\cite{naaijkens_2017} prop 3.2.8]\label{prop: states are equivalent if they agree at infinity}
+    Two pure states $\rho_1$ and $\rho_2$ are unitarily equivalent iff for every $\epsilon >0$ there exists a finite region $\Lambda\subset\Gamma$ such that
+    \[
+        |\rho_1(A)-\rho_2(A)|<\epsilon\norm{A}
+    \]
+    For $A\in\cA_{\Lambda^c}$. 
+    \begin{proof}
+        Pure states are factor states; therefore by corollary 2.6.11 in \cite{bratteli_1987} $\rho_1$ and $\rho_2$ are quasi-equivalent iff they satisfy the condition of the proposition. Moreover, pure states have irreducible GNS representations, and hence unitary equivalence and quasi-equivalence are the same by Proposition 10.3.7 in \cite{kadison_1997}.
+    \end{proof}
+\end{prop}
+\begin{rmk}
+    The previous proposition is an especially powerful tool and heuristically means that two pure states are equivalent if they agree at infinity. 
+\end{rmk}
+\begin{prop}
+    Every state that is unitarily equivalent to some $E$ satisfies the selection criterion. 
+    \begin{proof}
+        Let $\rho$ be unitarily equivalent to some $E$. Then by the previous proposition for every $\epsilon>0$ there exists a finite region $\Lambda_1\subset\Gamma$ such that
+        \[
+            |\rho(A)-E(A)|\leq\epsilon\norm{A}
+        \]
+        for all $A\in\cA_{\Lambda_1^c}$. Let $\Lambda_2$ be as in Proposition \ref{prop: excitation states satisfy strong selection criterion} and let $\Lambda=\Lambda_1\cup\Lambda_2$. Then for all operators $A$ supported on balls $B\subset\Lambda^c$ we find
+        \[
+            |\rho(A)-E(A)|=|\rho(A)-E_0(A)|\leq\epsilon\norm{A} \\
+        \]
+    \end{proof}
+\end{prop}
+\begin{comment}
+\subsection{A different approach}
+\noah{Much less of a fan of this approach and feel that there are likely mistakes I'm missing}
+
+\begin{lem}
+    Let $U\in\cA$ be unitary. Then for any state $\rho$ we have $|\rho(U^*AU)-\rho(U)|<2\sqrt{2|1-\rho(U)|}\norm{A}$. In particular $|\rho(U^*AU)-\rho(U)|<2\sqrt{2|1-\rho(U)|}$ for $A\in\mathcal P$.
+    \begin{proof}
+        Decompose $\rho(U^*AU)=\rho((U^*-1)AU)+\rho(A(U-1))$. The Cauchy-Schwarz inequality for $C^*$ algebras gives   
+        \[
+            \rho((U^*-1)AU)|\leq\sqrt{\rho((U^*-1)(U-1))\rho(AA^*)}=\sqrt{\rho((U^*-1)(U-1)}|\rho(A)|
+        \]
+        And similarly 
+        \[
+            |\rho(A(U-1))|\leq \sqrt{\rho((U^*-1)(U-1)}|\rho(A)|
+        \]
+        Applying the triangle inequality, we find 
+        \begin{align*}
+            |\rho(U^*AU)|&\leq|\rho((U^*-1)AU)|+|\rho(A(U-1))| \\
+            & \leq 2\sqrt{\rho((U^*-1)(U-1))}|\rho(A)|\\
+            & \leq 2\sqrt{\rho((U^*-1)(U-1)}||A||
+        \end{align*}
+        Where the last inequality follows from the definition of the operator norm \noah{think this works but not sure}. For the last step, notice that $\rho((U^*-1)(U-1))=2-2\operatorname{Re}(\rho(U))<2|1-\rho(U)|$).
+    \end{proof}
+\end{lem}
+\begin{prop}
+    Let $\rho$ satisfy the selection criterion, then for all $\epsilon>0$ there exists a finite region $\Lambda\subset \Gamma$ such that  
+    \[
+        |\rho(U^*AU)-\rho(A)|<\epsilon
+    \]
+    For $U\in L\cap\cA_{\Lambda^c}$ and $A\in\mathcal P$.
+    \begin{proof}
+        Choose region $\Lambda\subset\Gamma$ satisfying the selection criterion for $\epsilon'>0$.  Decompose $A=A_iA_o$ with $A_i\in\cA_\Lambda, A_o\in\cA_{\Lambda^c}$. The only non-trivial commutation can come from $A_o$, therefore ff $A_o$ is a stabilizer, then the inequality is trivial since stabilizers commute. Otherwise, we can find a local stabilizer, $U'$ supported on a ball outside of $\Lambda$ such that $\omega(U',A)\neq0$.  It follows from the previous lemma that 
+        \begin{align*}
+            |\rho(U'^*AU')-\rho(A)|&=|1-e^{\omega(U',A)}||\rho(A)|\\
+            &< 2|1-e^{\omega(U',A)}|\sqrt{2|1-\rho(U')|} \\
+            &< 2|1-e^{\omega(U',A)}|\sqrt{2\epsilon'}
+        \end{align*}
+        Where the last line follows from the fact $\rho$ satisfies the selection criterion and $E_0(U)=1$. These inequalities provide   
+        \[
+            |\rho(A)|<2\sqrt{2\epsilon'}
+        \]
+        That is, $|\rho(A)|$ can be made arbitrarily small. Now returning to the original stabilizer $U$, we find
+        \begin{align*}
+            |\rho(U^*AU)-\rho(A)|&= |1-e^{\omega(U,A)}||\rho(A)|\\
+            & <|1-e^{\omega(U,A)}|2\sqrt{2\epsilon'} \\
+            & <|1-e^{\frac{2\pi i}{n}}|2\sqrt{2\epsilon'}
+        \end{align*}
+        Setting $\epsilon' = \frac{\epsilon^2}{8|1-e^{\frac{2\pi i}{n}}|^2} $ then gives the desired result.
+    \end{proof}
+\end{prop}
+
+\begin{thm}
+    Let $\rho$ be a pure state satisfying the selection criterion. Then for all $\epsilon>0$ there exists a finite region $\Lambda\subset\Gamma$ and $E\in\mathcal{L}^*$ such that 
+    \[
+        |\rho(A)-E(A)|<\epsilon\norm{A}
+    \]
+    For all $A\in\cA_{\Lambda^c}$
+    \begin{proof}
+        We have shown that $\rho$ "approaches" being an eigen-state of each stabilizer supported outside of some region; now we just need to show that it approaches an actual eigen-state. 
+    \end{proof}
+\end{thm}
+\end{comment}
+\section{The Cone Condition}
+The following selection condition originates in the work of Buchholz and Fredenhagen \cite{buchholz_fredenhagen_1982} and was studied for lattice systems by Naaijkens \cite{naaijkens_2011, naaijkens_2013}.
+\begin{defn}
+    Let $d=2$ such that $\Gamma\cong\mathbb{Z}^2$. Take any point in the plane with two semi-infinite lines emanating from it, such that the angle between those lines is positive but smaller than $\pi$. A cone $C$ is any region enclosed by two such lines.  
+\end{defn}
+We write $\pi_0:=\pi_{E_0}$ for the GNS representation of the vacuum state.
+\begin{defn}[Cone Criterion via \cite{buchholz_fredenhagen_1982,naaijkens_2013}]
+    Let $d=2$, a pure state $\rho$ on $\cA$  satisfies the cone criterion if for any cone $C \subset \Gamma$ we have
+    \[
+        \pi_0(\cA_{C^c})\cong \pi_\rho(\cA_{C^c})
+    \]
+\end{defn}
+\begin{thm}\label{thm: every omega_e satisfies the cone condition}
+Every $E$ for a $d=2$ Pauli code satisfies the cone condition. 
+\begin{proof}
+    \textcolor{blue}{sketch: Every Lagrangian $d=2$ Pauli code is fully mobile. Every excitation lives at the end of a finite-width string operator, and can be transported via a local finite-width string operator. Therefore, any $E$ can be produced by a local endomorphism which lives entirely within some cone $C_1$. For any other cone $C$, $E$ can be transported with a local string operator into a state $E'$ such that $E'$ lives at the end of a string operator supported entirely in $C$. Since these string operators are local endomorphisms of $\cA$, we have that $E'$ agrees with $E_0$ outside of $C$. Moreover, the local Pauli transporting $E$ to $E'$ provides a unitary equivalence $E\sim E'$}.
+\end{proof}
+\end{thm}
+\begin{cor}
+    Every state that satisfies the selection criterion for a $d=2$ Pauli code satisfies the cone condition.
+    \begin{proof}
+        By prop \ref{thm: selection criterion implies equivalence to some omega_e} every state that satisfies the selection criterion is unitarily equivalent to some $E$, which satisfies the cone condition by \ref{thm: every omega_e satisfies the cone condition}.
+    \end{proof}
+\end{cor}
+\begin{comment}
+\begin{thm}
+    Every state that satisfies the cone condition in $d=2$ satisfies the selection criterion. 
+    \begin{proof}
+        We prove the contrapositive. Let $\rho$ be a state that does not satisfy the selection criterion. That is, there exists an $\epsilon>0$ such that for every finite region $\Lambda\subset \Gamma$ there exists an operator $A\in\cA_{\Lambda^c}$ supported on a ball $B\subset\Lambda^c$ such that
+        \[
+            |\rho(A)-E_0(A)|>\epsilon\norm{A}
+        \]
+        Let $\cA_\rho$ denote the set of all such operators. The support of this set $\Lambda_\rho$ defined
+        \[
+            \Lambda_\rho= \bigcup_{A\in\cA_\rho}\operatorname{supp}(A)
+        \]
+        Must be infinite. Otherwise we could take the finite set $\Lambda=\Lambda_\rho$ and the assumption would fail, a contradiction. Since $\Lambda_\rho$ is infinite ee can always find a cone $C$ such that $\Lambda_\rho/C=\Lambda_\rho\cap C^c$ is infinite. Now let $\Lambda\subset C^c$ be  a finite region, then $\Lambda^c\cap(\Lambda_\rho\cap C^c)=\Lambda_\rho\cap (\Lambda\cup C)^c=\Lambda_\rho/(\Lambda\cup C)$ must also be infinite. Moreover, since each $A\in\cA_\rho$ has finite support, for any infinite subset of $\Lambda'_\rho\subset\Lambda_\rho$ we can always find an infinite number of operators $A\in \cA_\rho$ such that $\operatorname{supp}(A)\subset \Lambda'_\rho$. In particular, for each finite subset of $\Lambda\subset C^c$ there exists $A\in\cA_\rho\cap \cA_{(C\cup\Lambda)^c}$ supported on ball $B\in (\Lambda\cup C)^c$. More explicitly, for each finite subset $\Lambda\subset C^c $ there exists $A\in\cA_{(\Lambda\cup C)^c}$ supported on a ball $B\in (\Lambda\cup C)^c$ such that 
+        \[
+            |\rho(A)-E_0(A)|>\epsilon\norm{A}
+        \]
+        Applying proposition \ref{prop: states are equivalent if they agree at infinity} to the quasi-local Algebra $\cA_{C^c}$ then gives the desired result. 
+    \end{proof}
+\end{thm}
+\end{comment}
+\begin{lem}[{\cite[Proposition 16(1)]{vanluijkSchmidtRankCommuting2024}}]\label{lem: restrictions of pure state GNS reps are factors}
+    For any region $\Lambda$ and pure state $\rho$ the Von-Neumann algebra $\pi_\rho(\cA_\Lambda)''$ is a factor.
+    \begin{proof}
+        We have $ Z(\pi_\rho(\cA_\Lambda)'')=\pi_\rho(\cA_\Lambda)'\cap\pi_\rho(\cA_\Lambda)''$. But by locality we have $\pi_\rho(\cA_\Lambda)''\subset \pi_\rho(\cA_{\Lambda^c})'$. Hence $Z(\pi_\rho(\cA_\Lambda)'')\subset\pi_\rho(\cA_\Lambda)'\cap\pi_\rho(\cA_{\Lambda^c})'=\pi_\rho(\cA)'=\Bbb CI$ by the purity of $\rho$.  
+    \end{proof}
+\end{lem}
+\begin{lem}[{\cite[Lemma 23(2)]{vanluijkSchmidtRankCommuting2024}}]\label{lem: restrictions of pure states are factor states}
+    Let $\rho$ be a pure state,  $\Lambda\subset\Gamma$ be an arbitrary region, and  $\rho_\Lambda$ be the restriction of $\rho$ onto the algebra $\cA_\Lambda$. Then $\pi_\rho(\cA_\Lambda)$ is quasi-equivalent to $\pi_{\rho_\Lambda}(\cA_\Lambda)$. Moreover, $\rho_\Lambda$ is a factor state. 
+    \begin{proof}
+        Take the closed cyclic subspace $K=\overline{\pi_\rho(\cA_\Lambda)\xi_\rho}$. Then $(\pi_\rho, K,\xi_\rho)$ and $(\pi_{\rho_\Lambda}, \mathcal H_{\rho_\Lambda},\xi_{\rho_\Lambda})$are both cyclic representations of $\rho$ on $\cA_\Lambda$, and by the uniqueness of the GNS representations must be unitarily equivalent. That is $\pi_{\rho_\Lambda}$ is isomorphic to a subrepresentation of $\pi_{\rho}$. But by lemma \ref{lem: restrictions of pure state GNS reps are factors} $\pi_\rho(\cA_\Lambda)$ is a factor, and by \cite{kadison_1997} proposition 10.3.12 must therefore be quasi-equivalent to all of its subrepresentations. Moreover $\pi_{\rho_\Lambda}(\cA_\Lambda)$ is a factor thus $\rho_\Lambda$ is a factor state on $\cA_\Lambda$.
+    \end{proof}
+\end{lem}
+\begin{thm}\label{thm: cone implies selection}
+    Every state that satisfies the cone condition in $d=2$ satisfies the selection criterion. 
+    \begin{proof}
+        We prove the contrapositive. Let $\rho$ be a state that does not satisfy the selection criterion. That is, there exists an $\epsilon>0$ such that for every finite region $\Lambda\subset \Gamma$ there exists an operator $A\in\cA_{\Lambda^c}$ supported on a ball $B\subset\Lambda^c$ such that
+        \[
+            |\rho(A)-E_0(A)|>\epsilon\norm{A}
+        \]
+        In particular, if we let $\Lambda= B(0,m)$, then for each $m\in\mathbb{N}$ there exists an $A_m\in\cA_{B(0,m)^c}$ supported on a ball  $B_m\subset B(0,m)^c$. By Lemma \ref{lem: Balls in complements lie in half spaces} each of these balls lies entirely within some half-space $\{H_x^+,H_x^-,H_y^+,H_y^- \}$. At least one half-space $H_i^\pm$ will contain an infinite number of such $A_m$; moreover, the balls $B_m$ supporting such $A_m$ escape to infinity.  We can then choose a cone $C$ lying entirely within the opposite half-space $H_i^{\mp}$. The restrictions of $\rho_{C^c}$ and $(E_0)_{C^c}$ are factor states by lemma \ref{lem: restrictions of pure states are factor states}. Applying \cite{bratteli_1987} cor 2.6.11 comparing the restrictions $\rho_{C^c}$ and $(E_0)_{C^c}$ shows they are not quasi-equivalent, that is $\pi_{\rho_{C^c}}(\cA_{C^c})$ is not quasi-equivalent to $\pi_{(E_0)_{C^c}}(\cA_{C^c})$. Therefore $\pi_{\rho}(\cA_{C^c})$ is not quasi-equivalent to $\pi_{0}(\cA_{C^c})$ by lemma \ref{lem: restrictions of pure states are factor states}, and thus not unitarily equivalent. An illustration of the proof can be found in figure \ref{fig:theorem-5-5}
+        \begin{figure}[htpb]
+            \centering
+            \resizebox{\textwidth}{!}{%
+                \input{figures/theorem_5_5_figure.tex}}
+                \caption{
+                Illustration of the proof of Theorem~\ref{thm: cone implies selection}.
+                In (a), the supports $B_m$ escape to infinity.
+                In (b), infinitely many $B_m$
+                lie in a common half-space $H_i^+$ with supports escaping to
+                infinity. A cone $C\subset H_i^-$ is chosen in the opposite
+                half-space, so these supports lie in $C^c$.}
+            \label{fig:theorem-5-5}
+        \end{figure}
+    \end{proof}
+\end{thm}
+\begin{cor}
+    The cone condition and selection criterion are equivalent for $d=2$ .
+\end{cor}
+\FloatBarrier
 
 \section{Examples}
 \emph{To be written.}
 
 \appendix
-\section{Supplementary arguments}
-\emph{To be written.}
+
+\section{Central Extensions}\label{sec:central}
+We start with some general results about extensions of an abelian group  by a divisible groups. We will return to the Pauli group after this hiatus. Consider a central extension
+\[ 1 \to Z \to G \to A \to 1 \]
+where $Z$ is a divisible abelian group and $A$ is an abelian group. These are classified by cohomology classes $H^2(A,Z)$, and so to each such extension, there corresponds an equivalence of $2$-cocycles $c \colon A \times A \to Z$ which can be understood as follows. If $s\colon A \to G$ is a set-theoretic section, then
+\[ c(a,b) s(a) s(b)= s(a+b).\]
+Cocycles give the same extensions if there is a function $\phi \colon A \to Z$ such that
+\[ c(a,b) c'(a,b)^{-1} = \phi(a+b)  \phi(a)^{-1} \phi(b)^{-1}.\]
+If $s$ can be chosen to be a group homomorphism, i.e., if the extension splits, then $c$ is cohomologous to the trivial $2$-cocycle.
+Note the resemblance with quadratic forms to which we return later.
+
+We use multiplicative notation for $Z$ and write $\kappa$ for the map from cohomology classes to commutator forms. From $c$, we get a \emph{commutator form}
+\[\chi(a,b) = c(a,b)  c(b,a)^{-1}\]
+which has the property that for a set-theoretic section $s \colon A \to G$,
+\[ \chi(a,b) s(a)s(b) =s(b)s(a)  .\]
+In particular,  since any element of $G$ can be written as $zs(a)$ for $z\in Z$,  $G$ is abelian if and only if $\chi(a,b)=1$ for all $a,b$. That is, the commutator form is trivial.
+
+Let $\Alt(A, Z)$ be the alternating bilinear forms on $A$ with values in $Z$. That is, bilinear forms $\chi \colon A \times A \to Z$ such that $\chi(a,a)=1$. Recall that these are classified by
+\[ \Alt(A, Z) = \Hom(\Lambda^2A,Z)\]
+where $\Lambda^2A$ is the second alternating powers of $A$. But for any abelian group $\Lambda^2A$ is isomorphic to the subgroup of $A\otimes A$ generated by the symbols $a\otimes b -b\otimes a$. We have an exact sequence
+\[ 0 \to \Lambda^2A \to A\otimes A \to \Sym^2(A) \to 0 \]
+where the first map sends $a \wedge b$ to $a\otimes b-b\otimes a$ and $\Sym^2(A)$ is defined as the quotient.  If $Z$ is injective, noting that $\Hom(-,Z)$ is exact, we have an exact sequence
+\[ 0 \to \Hom(\Sym^2(A),Z) \to \Hom(A\otimes A, Z) \to \Hom_\Z(\Lambda^2 A,Z)  \to 0 .\]
+
+The first map sends a symmetric bilinear form $\beta$ to the underlying bilinear form, and the second map sends $f$ to $\chi(a,b) = f(a,b)f(b,a)^{-1}$. Therefore, we can identify the group of alternating forms as the quotients of the bilinear forms by the symmetric forms, and this sequence is identified with
+\[ 0 \to \Sym(A,Z) \to \Bil(A,Z) \to \Alt(A,Z) \to 0.\]
+In particular, alternating forms in this context are always \emph{even forms}.
+
+
+
+\begin{prop}
+Let $Z$ be a divisible abelian group and $A$ be an abelian group.
+The map
+\[ \kappa \colon H^2(A,Z) \to \Alt(A, Z) \]
+which sends the cohomology class of a $2$-cocycle $[c]$ to
+\[\chi(a,b) = c(a,b) c(b,a)^{-1}\]
+is an isomorphism. In particular, any cohomology class can be represented by a $2$-cocycle $[f]$ where  $f$ is a bilinear form.
+\end{prop}
+\begin{proof}
+Let $f$ be such that $\chi(a,b) = f(a,b) f(b,a)^{-1}$. Since $f$ is bilinear, it automatically satisfies the $2$-cocycle condition, so classifies a central extension. Clearly, $[f]$ maps to $\chi$.  Suppose that $c$ is a $2$-cocycle that maps to the trivial form. Then $G$ is abelian, and since $Z$ is divisible, it is injective, and so the extension is split. Since the map is an isomorphism and any $\chi$ lifts to $[f]$ for some bilinear $f$, any $[c]$ is cohomologous to $[f]$ for some bilinear form $f$.
+\end{proof}
+
+
+The isomorphism above fits in a diagram
+\[\xymatrix{
+0\ar[r] & \Sym(A,Z) \ar[d] \ar[r] & \Bil(A,Z) \ar[d]^-{\subset} \ar[r] &  \Alt(A, Z) \ar[r]\ar[d]^-{\kappa^{-1}}_-\cong & 0 \\
+0\ar[r] &B^2(A,Z) \ar[r]   & Z^2(A,Z) \ar[r] &  H^2(A,Z)   \ar[r] & 0
+}\]
+where the middle map sends $f$ to the corresponding $2$-cocycle.
+If the cocycle represented by $f$ maps to the trivial form, then
+\[f(a,b)= \phi(a+b)\phi(a)^{-1}\phi(b)^{-1}\]
+for some function $\phi \colon A \to Z$. The condition that $f$ be bilinear is equivalent to the condition that $\phi$ is a \emph{quadratic form}. That is, $\phi(na) = \phi(a)^{n^2}$ for all $n\in \Z$, $n\geq 0$. That is, $f$ has a \emph{quadratic refinement} $\phi$. We call $f$ the \emph{polarization} of $\phi$.
+
+\begin{lem}\label{lem:lift}
+Let $Z$ be a divisible group. Let $A$ and $A'$ be abelian group and $G,G'$ be central extensions classified by $f,f'$. Suppose that $\psi \colon A \to A'$ is a homomorphism and that
+\[\chi'(\psi(a),\psi(b)) = \chi(a,b)\]
+for all $a,b\in A$. Then $\psi$ lifts to a homomorphism $\Psi \colon G \to G'$ such that $\Psi(z)=z$ for all $z\in Z$.
+\end{lem}
+\begin{proof}
+Fix sections $s,s'$ associated to $f,f'$. The homomorphism $\Psi \colon G \to G'$, if it exists,  must have the form
+\[\Psi(zs(a)) = z\phi(a) s'(\psi(a))\]
+for some function $\phi \colon A \to Z$. Any such function will lift $\Psi$ to a set map satisfying the requirements, but
+we get  a homomorphism if and only if
+\begin{align}\label{eq:fphi} \phi(a+b)^{-1}\phi(a)\phi(b) =  f'(\psi(a),\psi(b))f(a,b)^{-1} =:c(a,b) .
+\end{align}
+The function $c$ defined by this equation is bilinear, so it is a $2$-cocycle, and
+the assumption on $\chi$ gives
+\[1=\frac{\chi'(\psi(a),\psi(b))}{\chi(a,b)} =\frac{f'(\psi(a),\psi(b))f'(\psi(b),\psi(a))^{-1}}{f(a,b)f(b,a)^{-1}}  \]
+so that
+\[ c(a,b)=f'(\psi(a),\psi(b))f(a,b)^{-1} =f'(\psi(b),\psi(a))f(b,a)^{-1} = c(b,a) .\]
+So, it is symmetric.  Hence $\kappa([c])=1$ and there is a quadratic form $\phi$ which satisfies all of the requirements.
+\end{proof}
+
+\begin{defn}\label{defn:compLag}
+Given an alternating or symmetric form $\chi \colon A \times A\to Z$ on an abelian group $A$ and a subgroup $L\subset A$, we let $L^\perp\subset A$ be those elements $ a \in A$ such that
+\[\chi(a,l ) =  1 = \chi(l,a) \]
+for all $l \in L$. This is called the \emph{orthogonal complement} of $L$, where the analogy is clear if one uses additive notation for $Z$. The subgroup $L$ is called \emph{isotropic} if $L\subset L^\perp$ and \emph{Lagrangian} if $L=L^\perp$.
+\end{defn}
+
+
+
+\begin{cor}\label{cor:Hquadratic}
+Let $G$ be a central extension of $A$ by a divisible group $Z$ with associated commutator form $\chi$. If $L\subset A$ is a subgroup such that $L\subset L^\perp$,
+then there is a group homomorphism $T \colon L \to G$ which is a section of the projection $G\to A$ restricted to $L$. Furthermore, if $G$ is the extension classified by a bilinear form $f$ with associated section $s \colon A \to G$, then for any quadratic refinement $\phi \colon L \to Z$ of $f|_L^{-1}$ (which must exist), we can define
+\[ T(l) = \phi(l)s(l).\]
+\end{cor}
+\begin{proof}
+For $L$ as in \cref{cor:Hquadratic}, note that $s(l)$ and $s(l')$ necessarily commute for $l,l' \in L$, but the subtlety comes from the fact that we need the phase encoded in the quadratic form to relate $s(l)$, $s(l')$ and $s(l+l')$,
+\[\phi(l+l')^{-1}\phi(l)\phi(l') s(l)s(l')  = s(l+l').\]
+To make this work
+we use the previous result  for the diagram
+\[\xymatrix{
+0 \ar[r] & Z \ar[r] \ar@{=}[d] & Z\times L \ar[r] & L \ar[r]\ar[d]^-{\subset}_{\psi} & 0 \\
+0 \ar[r] & Z \ar[r] & G \ar[r] & A \ar[r] & 0.
+}\]
+Since $\chi(l,l')=1$ for all $l,l'$, this satisfies the requirement of the previous result so $\Psi \colon  Z \times L \to G$ exists extending the inclusion $\psi$. Take $T(l) = \Psi(1,l)$. This shows existence. To get the formula,
+we look at the proof of \cref{lem:lift}, in particular \eqref{eq:fphi}.
+We see that for any $\phi \colon L \to Z$ such that
+\[  f(l,l') = \phi(l+l')^{-1}\phi(l)\phi(l') \]
+the formula $ T(zl) = z\phi(l)s(l)$ gives a lift. Since $\chi(l,l')=1$, we know that $f|_L$ has a quadratic refinement $\phi$, and so we can choose one to define $T$.
+\end{proof}
+
+
+
+
+
+
+
 
 \bibliographystyle{alpha}
 \bibliography{bib}
