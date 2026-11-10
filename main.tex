@@ -2,7 +2,7 @@
 \input{preamble}
 \input{macros}
 
-\title{A C* algebra selection criterion for Pauli codes}
+\title{A C*-algebra selection criterion for Pauli codes}
 \author[1]{Noah Welikson}
 \author[1,2]{Michael Hermele}
 \author[3]{Agn\`es Beaudry}
@@ -387,6 +387,31 @@ We say that $(L,H,B)$ is \emph{projectively translation invariant} if both $L$ a
 
 
 One way to specify a stabilizer code is to specify an $\cL \subset \cP$ which maps isomorphically onto its image $L$ in $P$. This is the case for many examples in the literature.
+
+\begin{defn}
+The \emph{$X$-sector} $P_X\subset P$ consists of elements of the form
+$(a\co 0)$, and the \emph{$Z$-sector} $P_Z\subset P$ consists of elements
+of the form $(0\co b)$. A stabilizer code is called a
+\emph{Calderbank--Shor--Steane (CSS) code} if
+\[
+L=(L\cap P_X)\oplus(L\cap P_Z).
+\]
+For a translation invariant CSS code, we can choose a translation invariant
+local generating set whose elements each lie in either $P_X$ or $P_Z$.
+\end{defn}
+
+\begin{prop}[Paris notes, Proposition~4.2.6]\label{prop:css-translation-invariant-parent}
+For a translation invariant CSS code $L$, there always exists a translation invariant parent Hamiltonian $H\colon L\to \cP$.
+\end{prop} 
+\begin{proof}
+Since $L=(L\cap P_X)\oplus (L\cap P_Z)$, it suffices to construct the map $H\colon L\to \cP$ separately on the two summands. Namely, we construct maps $H_X\colon L\cap P_X\to \cP$ and $H_Z\colon L\cap P_Z\to \cP$, both given simply by $\fh$ with trivial phase. Since $\fh(L\cap P_X)$ and $\fh(L\cap P_Z)$ commute, these two constructions are compatible and together define a well-defined map $H$ on all of $L$.
+
+More concretely, choose a translation-invariant local generating set $B$ for $L$ such that each $b\in B$ lies either in $P_X$ or in $P_Z$. Define $H\colon L\to \cP$ on generators by
+$H(b)=\fh_b$
+for every $b\in B$, and then extend multiplicatively to all of $L$. The commutation observation above ensures that this extension is well-defined. Moreover, since the generating set $B$ is translation invariant and the assignment $b\mapsto \fh_b$ respects translations, the image $H(L)$ is translation invariant.
+
+Note, the method only works because $\fh|_{P_X}$ and $\fh|_{P_Z}$ are group homomorphisms. 
+\end{proof}
 
 For a translation invariant code, $L$ is an $R$-submodule of the finite free module $P$. Since $R$ is Noetherian, we can choose a finite $R$-generating set $B=\{b_1,\ldots,b_t\}$ for $L$. For such a code, we henceforth choose $B$ to be such a set and write
 \[
