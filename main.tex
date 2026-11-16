@@ -7,13 +7,15 @@
 \author[1,2]{Michael Hermele}
 \author[3]{Agn\`es Beaudry}
 \author[4]{Daniel Spiegel}
+\author[5]{Bowen Yang}
 \affil[1]{Department of Physics, University of Colorado Boulder.}
 \affil[2]{Center for Theory of Quantum Matter, University of Colorado Boulder.}
 \affil[3]{Department of Mathematics, University of Colorado Boulder.}
 \affil[4]{Department of Mathematics, Harvard University.}
+\affil[5]{Center of Mathematical Sciences and Applications, Harvard University.}
 \makeatletter
 \g@addto@macro\AB@authlist{ + ???}
-\def\shortauthors{Welikson, Hermele, Beaudry, Spiegel + ???}
+\def\shortauthors{Welikson, Hermele, Beaudry, Spiegel, Yang + ???}
 \makeatother
 \date{}
 
@@ -400,7 +402,7 @@ For a translation invariant CSS code, we can choose a translation invariant
 local generating set whose elements each lie in either $P_X$ or $P_Z$.
 \end{defn}
 
-\begin{prop}[Paris notes, Proposition~4.2.6]\label{prop:css-translation-invariant-parent}
+\begin{prop}\label{prop:css-translation-invariant-parent}
 For a translation invariant CSS code $L$, there always exists a translation invariant parent Hamiltonian $H\colon L\to \cP$.
 \end{prop} 
 \begin{proof}
@@ -702,9 +704,12 @@ A stabilizer code $(L,H)$ is Lagrangian if and only if it has a unique frustrati
 \[ \frac{L^{\vee}}{P/L}\]
 where $L^\vee = \Hom(L,\rmU(1))$ is the Pontryagin dual and the map $P/L \to L^\vee$ is given by $p \mapsto \chi(p,-)$.
 \end{cor}
-
-For a Lagrangian stabilizer code, we write
+\begin{defn}
+For a Lagrangian stabilizer code, we define the set set of algebriac superselection sectors.
 \[ \sQ_L:=\frac{L^{\vee}}{P/L}.\]
+If $L$ is translation-inariant then $\sQ_L$ is naturally an $R$-module. 
+\end{defn}
+
 
 \section{Charge Modules}
 
@@ -825,11 +830,31 @@ Further,  this is an injection if and only if $L$ is Lagrangian, that is, if and
 \begin{defn}
 Let $(L,H)$ be a Lagrangian stabilizer code. The group of \emph{superselection sectors} of $L$ is the abelian group
 \[Q_L:= \frac{L^*}{P/L} \]
-It is the quotient of the local excitations by the locally creatable excitations.
+It is the quotient of the local excitations by the locally creatable excitations. If $L$ is translation invariant the $Q_L$ is naturally an $R$-module. 
 \end{defn}
+\begin{lem}\label{lem:local-excitation-classes}
+For a translation-invariant Lagrangian Pauli code, $Q_L$ is in bijection with equivalence classes of local excitations, where two excitations are equivalent if their associated GNS representations are unitarily equivalent.
+\end{lem}
+\begin{proof}
+Since $nL=0$, every character $\chi\colon L\to\rmU(1)$ takes values in the group $\mu_n$ of $n$th roots of unity. Fixing $\zeta=e^{2\pi i/n}$, the isomorphism
+\[
+\Z_n\xrightarrow{\sim}\mu_n,\qquad a\mapsto\zeta^a
+\]
+therefore identifies $\chi$ with a unique additive homomorphism $E\colon L\to\Z_n$, through $\chi(l)=\zeta^{E(l)}$. This identification preserves locality, since $\chi(x^\lambda l)=1$ exactly when $E(x^\lambda l)=0$.
+
+By Proposition~\ref{prop:lochom}, these local additive homomorphisms are identified with $L^*$. Proposition~\ref{prop:superselection} says that two associated GNS representations are unitarily equivalent exactly when their phase characters differ by a commutation character $l\mapsto\zeta^{\omega(p,l)}$ for some $p\in P$. Under the preceding identification, this means
+\[
+E-E'=\omega(p,-).
+\]
+Thus equivalence classes of local excitations are precisely
+\[
+L^*/\operatorname{im}(P\to L^*).
+\]
+Since $L$ is Lagrangian, the kernel of this map is $L$, so this quotient is $L^*/(P/L)=Q_L$.
+\end{proof}
 
 \section{Eigenstates and projectors}
-For the rest of the paper we set $E_0$ to be the vacuum state. We denote by $B(z,r)$ the ball of radius $r>0$ centered at $z\in\Gamma$ in the $\ell^\infty$ norm, and set $\mathcal B_\Lambda=\{S\in\mathcal B:\operatorname{supp}(S)\subset\Lambda\}$ for $\Lambda\subset\Gamma$. The elements of $\mathcal B$ are the elementary stabilizers defined above. We also now restrict to translation invariant local Lagrangian Pauli codes.
+For the rest of the paper we set $E_0$ to be the vacuum state. We denote by $D(z,r)$ the ball of radius $r>0$ centered at $z\in\Gamma$ in the $\ell^\infty$ norm, and set $\mathcal B_\Lambda=\{S\in\mathcal B:\operatorname{supp}(S)\subset\Lambda\}$ for $\Lambda\subset\Gamma$. The elements of $\mathcal B$ are the elementary stabilizers defined above. We also now restrict to translation invariant local Lagrangian Pauli codes.
 \subsection{Eigenstates}
 \begin{lem}[The Cauchy–Schwarz inequality for states, Prop 4.3.1 in \cite{kadison_1983}]
     Let $\varphi$ be a state and $A,B\in\cA$. Then  $|\varphi(A^*B)|^2\leq\varphi(A^*A)\varphi(B^*B)$.
@@ -1009,37 +1034,37 @@ From here on, we will use this enlarged region for the selection criterion.
     \]
 \end{defn}
 \begin{lem}\label{lem: Balls in complements lie in half spaces}
-    Let $B(0,m)$ be a ball. Then for every ball $B\subset B(0,m)^c $ there exists at least one half-space $H_i^\pm\equiv H_i^\pm(\pm m)$ such that $B\subset H_i^\pm$
+    Let $D(0,m)$ be a ball. Then for every ball $B\subset D(0,m)^c $ there exists at least one half-space $H_i^\pm\equiv H_i^\pm(\pm m)$ such that $B\subset H_i^\pm$
     \begin{proof}
-        Assume the statement were false. A ball $B(z,r)\not\subset H_i^+\cup H_i^-$ implies that there exists $x\in B(z,r)$ such that $x_i \in \left[-m,m\right]\cap (z_i-r,z_i+r)$. For each such $x$ let $y_i=x_i$ and let $y=(y_1,\ldots, y_D)$. Clearly $y\in B(z,r)$, however $\norm{y}\leq m$ and hence $z\in B$, a contradiction since this would imply $B(0,m)\cap B(z,r)\neq \emptyset$
+        Assume the statement were false. A ball $D(z,r)\not\subset H_i^+\cup H_i^-$ implies that there exists $x\in D(z,r)$ such that $x_i \in \left[-m,m\right]\cap (z_i-r,z_i+r)$. For each such $x$ let $y_i=x_i$ and let $y=(y_1,\ldots, y_D)$. Clearly $y\in D(z,r)$, however $\norm{y}\leq m$ and hence $z\in B$, a contradiction since this would imply $D(0,m)\cap D(z,r)\neq \emptyset$
         
-        Thus $\norm{x}\leq m$ for $x\in B$ and $x\in B(0,m)$, a contradiction. See figure \ref{fig:lemma45} for an illustration.
+        Thus $\norm{x}\leq m$ for $x\in B$ and $x\in D(0,m)$, a contradiction. See figure \ref{fig:lemma45} for an illustration.
     \end{proof}
     \begin{figure}[ht]
       \centering
       \resizebox{\textwidth}{!}{%
         \input{figures/ball_in_complement_halfspace_tikz_only.tex}%
       }
-      \caption{A ball contained in the complement of $\Lambda=B(0,r)$
+      \caption{A ball contained in the complement of $\Lambda=D(0,r)$
       lies entirely in some half-space $H_i^{\pm}$; a ball that
       cannot be contained entirely in a half-space would intersect $\Lambda$.}
       \label{fig:ball-in-complement-halfspace}
     \end{figure}
 \end{lem}
 \begin{lem}\label{lem: halfspace decomposition}
-    Let $B(z,r)$ be a ball. Then there exists a number $N$ such that for any finite region $\Lambda\subset B(z,r)^c$ there exists a family of balls $\{B_j\}_{j\in1,\ldots n}$  covering $\Lambda$ with $B_j\subset B(z,r)^c$  and $n\leq N$. That is 
+    Let $D(z,r)$ be a ball. Then there exists a number $N$ such that for any finite region $\Lambda\subset D(z,r)^c$ there exists a family of balls $\{B_j\}_{j\in1,\ldots n}$  covering $\Lambda$ with $B_j\subset D(z,r)^c$  and $n\leq N$. That is 
     \[
-        \Lambda\subset\bigcup_{j=1}^nB(z_j,r_j)
+        \Lambda\subset\bigcup_{j=1}^nD(z_j,r_j)
     \]
     \begin{proof}
-        It is sufficient to check a ball at the origin $B(0,r)$. Define the half-spaces $H_i^\pm\subset\Gamma$ 
+        It is sufficient to check a ball at the origin $D(0,r)$. Define the half-spaces $H_i^\pm\subset\Gamma$ 
         \[
             H_i^+\equiv H_i^+(r)=\{z\in\Gamma|z_i>r\}
         \]
         \[
             H_i^-\equiv H_i^-(-r)=\{z\in\Gamma|z_i<-r\}
         \]
-        It is clear that $B(0,r)^c=\bigcup H_i^\pm$. There are $2D$ such half-spaces. Moreover, for any subregion $F\subset H_i^\pm$ there exists a ball $B_i^\pm\subset H_i^\pm$ covering $F$. To see this let $R=\max(\norm{z}|z\in F)$ and take $B^\pm_i=B(\pm 2Re_i,2R-r)$. Now, for any finite region $\Lambda\subset \Gamma$ let $\Lambda_i^\pm=\Lambda\cap H_i^\pm$ and find a covering of $\Lambda_i^\pm$ by ball $B_i^\pm$ defined as before. There are always at most $2D$ such balls by construction, completing the proof.  An illustration of these half-spaces and balls in $D=2$ is found below in figure \ref{fig:lemma45} .
+        It is clear that $D(0,r)^c=\bigcup H_i^\pm$. There are $2D$ such half-spaces. Moreover, for any subregion $F\subset H_i^\pm$ there exists a ball $B_i^\pm\subset H_i^\pm$ covering $F$. To see this let $R=\max(\norm{z}|z\in F)$ and take $B^\pm_i=D(\pm 2Re_i,2R-r)$. Now, for any finite region $\Lambda\subset \Gamma$ let $\Lambda_i^\pm=\Lambda\cap H_i^\pm$ and find a covering of $\Lambda_i^\pm$ by ball $B_i^\pm$ defined as before. There are always at most $2D$ such balls by construction, completing the proof.  An illustration of these half-spaces and balls in $D=2$ is found below in figure \ref{fig:lemma45} .
 
     \begin{figure}[ht]
       \centering
@@ -1048,7 +1073,7 @@ From here on, we will use this enlarged region for the selection criterion.
       }
       \caption{Illustration of Lemma~\ref{lem: halfspace decomposition}. The complement of the central
       ball decomposes into $2D$ half-spaces; in $D=2$,
-      a finite region $\Lambda\subset B(0,r)^c$ can be covered by
+      a finite region $\Lambda\subset D(0,r)^c$ can be covered by
       four balls, each lying entirely within one half-space.}
       \label{fig:lemma45}
     \end{figure}
@@ -1128,7 +1153,7 @@ From here on, we will use this enlarged region for the selection criterion.
        \[
            \Lambda_1=\bigcup_{s\in B_E}\operatorname{supp}(H_s).
        \]
-       Every $S\in\mathcal B$ supported in $\Lambda_1^c$ satisfies $E(S)=1=E_0(S)$. Let $B(0,r)$ be some ball containing $\Lambda_1$ and define $c=\max\{c_i^\pm\}$ as in prop \ref{prop: Stabilizers decomposition support bound}. Now let $\Lambda_2= B(0,r+c)$. We have shown that any ball in $\Lambda_2^c$ is contained entirely within some half-space $H_i^\pm(\pm (r+c))$. Moreover,  every $U\in\mathcal L$ supported entirely within $H_i^\pm(\pm (r+c))$ has a decomposition into elementary stabilizers $S_1,\ldots S_n\in\mathcal B$, each of which is supported on $H_i^\pm(\pm r)$ by proposition \ref{prop: Stabilizers decomposition support bound}. But such elementary stabilizers lie outside of $B(0,r)$, in particular outside $\Lambda_1$. So $E(S_i)=1$ for each $S_i$ and therefore $E(U)=1=E_0(U)$. Setting $\Lambda=\Lambda_2=B(0,r+c)$ gives the desired result.
+       Every $S\in\mathcal B$ supported in $\Lambda_1^c$ satisfies $E(S)=1=E_0(S)$. Let $D(0,r)$ be some ball containing $\Lambda_1$ and define $c=\max\{c_i^\pm\}$ as in prop \ref{prop: Stabilizers decomposition support bound}. Now let $\Lambda_2= D(0,r+c)$. We have shown that any ball in $\Lambda_2^c$ is contained entirely within some half-space $H_i^\pm(\pm (r+c))$. Moreover,  every $U\in\mathcal L$ supported entirely within $H_i^\pm(\pm (r+c))$ has a decomposition into elementary stabilizers $S_1,\ldots S_n\in\mathcal B$, each of which is supported on $H_i^\pm(\pm r)$ by proposition \ref{prop: Stabilizers decomposition support bound}. But such elementary stabilizers lie outside of $D(0,r)$, in particular outside $\Lambda_1$. So $E(S_i)=1$ for each $S_i$ and therefore $E(U)=1=E_0(U)$. Setting $\Lambda=\Lambda_2=D(0,r+c)$ gives the desired result.
    \end{proof}
 \end{prop}
 \begin{prop}[\cite{naaijkens_2017} prop 3.2.8]\label{prop: states are equivalent if they agree at infinity}
@@ -1157,6 +1182,108 @@ From here on, we will use this enlarged region for the selection criterion.
         \]
     \end{proof}
 \end{prop}
+\begin{defn}
+    Let $\varphi_0$ be a pure, translation invariant state. Then define  $\mathfrak{S}_{\varphi_0}(\mathfrak A)$ to be the set of states satisfying the selection criterion for ground state $\varphi_0$. We define $\mathfrak{Q}_{\varphi_0}$ to be the unitary equivalence classes of $\mathfrak{S}_{\varphi_0}(\mathfrak A)$.
+\end{defn}
+\begin{thm}\label{thm:selection-sector-module}
+    Let $(H,L)$ be a translation invariant lagrangian Pauli code with ground state $\varphi_0$. Then there is an isomorphism of $R$-modules
+    $\mathfrak{Q}_{\varphi_0}\cong Q_L$
+    \begin{proof}
+        For $E\in L^*$, write $[E]$ for the unitary equivalence class of its associated state. By Proposition~\ref{prop: excitation states satisfy strong selection criterion}, this state satisfies the selection criterion. Consequently, we obtain a map
+        \[
+        \Phi\colon Q_L\longrightarrow\mathfrak Q_{\varphi_0},
+        \qquad E+(P/L)\longmapsto[E].
+        \]
+        Lemma~\ref{lem:local-excitation-classes} shows that this map is well-defined and injective: two local excitations determine the same GNS equivalence class exactly when their difference belongs to the image of $P/L$. Theorem~\ref{thm: selection criterion implies equivalence to some omega_e} shows that every state satisfying the selection criterion is unitarily equivalent to a local excitation. Thus $\Phi$ is surjective.
+
+        We equip $\mathfrak Q_{\varphi_0}$ with $R$-module structure by setting
+        \[
+        [E]+[F]:=[E+F],
+        \qquad r[E]:=[rE],\quad r\in R,
+        \]
+        where $E,F\in L^*$. These operations are independent of the chosen representatives. Indeed, if
+        \[
+        E'-E=\epsilon(p),\qquad F'-F=\epsilon(q),
+        \]
+        where $\epsilon\colon P\to L^*$ is the excitation map, then its $R$-linearity gives
+        \[
+        (E'+F')-(E+F)=\epsilon(p+q),
+        \qquad rE'-rE=\epsilon(rp).
+        \]
+        Lemma~\ref{lem:local-excitation-classes} therefore identifies the resulting GNS classes. The $R$-module structure descends from those of $L^*$; the zero element is the vacuum class $[\varphi_0]$. By construction, $\Phi$ preserves addition and the $R$-action. Hence it is an $R$-module isomorphism
+        \[
+        Q_L\cong\mathfrak Q_{\varphi_0}.
+        \]
+    \end{proof}
+\end{thm}
+\subsection{QCA Equivalence}
+\begin{defn}
+	Let $\mathfrak A$ and $\mathfrak A'$ be two quasi-local algebras over $\Gamma\cong \Z^D$. A \emph{quantum cellular automaton} is a $*$-automorphism, $\alpha:\mathfrak A\to\mathfrak A'$ such that there exists an $r\geq 0$ such that for $x\in\Gamma$ and $A\in \mathfrak A_{\{x\}}$ we have 
+	\[
+		\alpha(A)\in \mathfrak A'_{D(x,r)}
+	\]
+	We call such an $r$ the \emph{range} of $\alpha$. 
+    %If $\mathfrak A$ and $\mathfrak A'$ are both translation invariant, polarized, Pauli algebras, with sectors $(\mathfrak A_X,\mathfrak A_Z)$ and $(\mathfrak A_X',\mathfrak A_Z')$  then we say $\alpha$ is a polarized QCA if it sends $\mathfrak A_X\to \mathfrak A_X'$ and $\mathfrak A_Z\to \mathfrak A_Z'$.
+\end{defn}
+\begin{remark}
+\label{rem:qca-locality-regions}
+The locality condition is equivalently stated as follows: there exists $r\geq 0$
+such that for every region $V\subset\Gamma$,
+\[
+ A\in\mathfrak A_V\quad\Longrightarrow\quad
+ \alpha(A)\in\mathfrak A'_{V^{+r}},
+\]
+where
+\[
+ V^{+r}=\{x\in\Gamma\mid \|x-v\|_\infty\leq r\text{ for some }v\in V\}
+\]
+is the $r$-neighborhood of $V$.
+\end{remark}
+\begin{thm}
+    Suppose $(H,L)$ and $(H',L')$ are two translation invariant lagrangian Pauli codes with quasi-local operator algebras $\mathfrak A$ and $\mathfrak A'$, and ground states $\varphi_0$ and $\varphi_0'$. If $\alpha:\mathfrak A\to\mathfrak A'$ is a QCA satisfying the following properties
+    \begin{enumerate}
+        \item $\varphi_0'\circ \alpha =\varphi_0$
+        \item $\tau_g'\circ\alpha=\alpha \circ\tau_g $ for $g\in \Gamma$, where $\tau_g$ and $\tau_g'$ denote the translation actions on $\mathfrak A$ and $\mathfrak A'$
+    \end{enumerate}
+    Then $\alpha$ induces an $R$-module isomorphism.
+    \[
+        \bar\alpha: Q_L \cong Q_{L'}
+    \]
+\begin{proof}
+We first show that if a pure state $\varphi'$ on $\mathfrak A'$ satisfies the selection criterion from Definition~\ref{def: Selection Criterion}, then $\varphi'\circ\alpha$ satisfies the selection criterion. To see this, let $r$ be an integer range of $\alpha$ and let $V\subset\Gamma$ be a finite region such that
+\[
+|\varphi'(A')-\varphi_0'(A')|<\epsilon\norm{A'}
+\]
+for $A'\in\mathfrak A'$ supported on a ball contained in $V^c$. Now suppose $A\in\mathfrak A$ is supported on a ball $B\subset(V^{+r})^c$. By Remark~\ref{rem:qca-locality-regions}, $\alpha(A)$ is supported on the ball $B^{+r}\subset V^c$. Therefore we have
+\begin{align*}
+|\varphi'(\alpha(A))-\varphi_0(A)|
+&=|\varphi'(\alpha(A))-\varphi_0'(\alpha(A))|\\
+&<\epsilon\norm{\alpha(A)}\\
+&=\epsilon\norm{A}.
+\end{align*}
+The first equality follows from the first condition on $\alpha$, the inequality follows from the selection criterion, and the last equality follows from the fact that every $*$-isomorphism of $C^*$-algebras is an isometry. Hence $\varphi'\circ\alpha$ satisfies the selection criterion. Since $\alpha^{-1}$ is also a QCA of range $r$, and $*$-isomorphisms preserve purity, we have that $\alpha$ provides a bijection of states satisfying their respective selection criteria. Moreover, since $*$-isomorphisms preserve unitary equivalence, $\alpha$ descends to a bijection of unitary equivalence classes of such states, denoted $\mathfrak Q_{\varphi_0}$ and $\mathfrak Q_{\varphi_0'}$. But Theorem~\ref{thm:selection-sector-module} says that there is a bijection $\mathfrak Q_{\varphi_0}\to Q_L$. Composing these, we get bijections
+\[
+\begin{tikzcd}[column sep=large]
+Q_L &
+\mathfrak Q_{\varphi_0} \arrow[l,"\sim"'] &
+\mathfrak Q_{\varphi_0'} \arrow[l,"\bar\alpha"',"\sim",swap] \arrow[r,"\sim"] &
+Q_{L'}
+\end{tikzcd},
+\]
+where $\alpha^*([\varphi'])=[\varphi'\circ\alpha]$, and thus a bijection $Q_L\cong Q_{L'}$. To complete the proof we need only show $\bar\alpha$ is a morphism of $R$-modules, but this follows quickly from condition $(2)$.
+\end{proof}.
+\end{thm}
+This motivates the following definition for QCA equivalence of lagrangian Pauli codes.
+\begin{defn}
+    Let $C=(H,L)$ and $C'=(H',L')$ be two translation invariant lagrangian Pauli codes with quasi-local algebras $\mathfrak A$ and $\mathfrak A'$ over $\Gamma$ and ground states $\varphi_0$ and $\varphi_0'$. A QCA equivalence of $C$ and $C'$ is a QCA satisfying
+    \begin{enumerate}
+        \item $\varphi_0'\circ \alpha =\varphi_0$
+        \item $\tau_g'\circ\alpha=\alpha \circ\tau_g $ for $g\in \Gamma$
+    \end{enumerate}
+\end{defn}
+
+
+
 \begin{comment}
 \subsection{A different approach}
 \noah{Much less of a fan of this approach and feel that there are likely mistakes I'm missing}
@@ -1358,7 +1485,7 @@ Since $C$ was arbitrary, $E$ satisfies the cone criterion.
         \[
             |\varphi(A)-E_0(A)|>\epsilon\norm{A}
         \]
-        In particular, if we let $\Lambda= B(0,m)$, then for each $m\in\mathbb{N}$ there exists an $A_m\in\cA_{B(0,m)^c}$ supported on a ball  $B_m\subset B(0,m)^c$. By Lemma \ref{lem: Balls in complements lie in half spaces} each of these balls lies entirely within some half-space $\{H_x^+,H_x^-,H_y^+,H_y^- \}$. At least one half-space $H_i^\pm$ will contain an infinite number of such $A_m$; moreover, the balls $B_m$ supporting such $A_m$ escape to infinity.  We can then choose a cone $C$ lying entirely within the opposite half-space $H_i^{\mp}$. The restrictions of $\varphi_{C^c}$ and $(E_0)_{C^c}$ are factor states by lemma \ref{lem: restrictions of pure states are factor states}. Applying \cite{bratteli_1987} cor 2.6.11 comparing the restrictions $\varphi_{C^c}$ and $(E_0)_{C^c}$ shows they are not quasi-equivalent, that is $\pi_{\varphi_{C^c}}(\cA_{C^c})$ is not quasi-equivalent to $\pi_{(E_0)_{C^c}}(\cA_{C^c})$. Therefore $\pi_{\varphi}(\cA_{C^c})$ is not quasi-equivalent to $\pi_{0}(\cA_{C^c})$ by lemma \ref{lem: restrictions of pure states are factor states}, and thus not unitarily equivalent. An illustration of the proof can be found in figure \ref{fig:theorem-5-5}
+        In particular, if we let $\Lambda= D(0,m)$, then for each $m\in\mathbb{N}$ there exists an $A_m\in\cA_{D(0,m)^c}$ supported on a ball  $B_m\subset D(0,m)^c$. By Lemma \ref{lem: Balls in complements lie in half spaces} each of these balls lies entirely within some half-space $\{H_x^+,H_x^-,H_y^+,H_y^- \}$. At least one half-space $H_i^\pm$ will contain an infinite number of such $A_m$; moreover, the balls $B_m$ supporting such $A_m$ escape to infinity.  We can then choose a cone $C$ lying entirely within the opposite half-space $H_i^{\mp}$. The restrictions of $\varphi_{C^c}$ and $(E_0)_{C^c}$ are factor states by lemma \ref{lem: restrictions of pure states are factor states}. Applying \cite{bratteli_1987} cor 2.6.11 comparing the restrictions $\varphi_{C^c}$ and $(E_0)_{C^c}$ shows they are not quasi-equivalent, that is $\pi_{\varphi_{C^c}}(\cA_{C^c})$ is not quasi-equivalent to $\pi_{(E_0)_{C^c}}(\cA_{C^c})$. Therefore $\pi_{\varphi}(\cA_{C^c})$ is not quasi-equivalent to $\pi_{0}(\cA_{C^c})$ by lemma \ref{lem: restrictions of pure states are factor states}, and thus not unitarily equivalent. An illustration of the proof can be found in figure \ref{fig:theorem-5-5}
         \begin{figure}[htpb]
             \centering
             \resizebox{\textwidth}{!}{%
